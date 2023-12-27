@@ -20,6 +20,8 @@ public class Application {
     private int physicsMark;
     @Column(name="certificate_mark")
     private int certificateMark;
+    @Column(name="confirmed")
+    private int confirmed;
 
     public Application() {
     }
@@ -31,6 +33,7 @@ public class Application {
         this.englishMark = englishMark;
         this.physicsMark = physicsMark;
         this.certificateMark = certificateMark;
+        this.confirmed = 0;
     }
 
     public Application(Integer applicantId, int mathsMark, int englishMark, int physicsMark, int certificateMark) {
@@ -39,6 +42,7 @@ public class Application {
         this.englishMark = englishMark;
         this.physicsMark = physicsMark;
         this.certificateMark = certificateMark;
+        this.confirmed = 0;
     }
 
     public Integer getId() {
@@ -89,17 +93,26 @@ public class Application {
         this.certificateMark = certificateMark;
     }
 
+
+    public int getConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(int confirmed) {
+        this.confirmed = confirmed;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Application that = (Application) o;
-        return mathsMark == that.mathsMark && englishMark == that.englishMark && physicsMark == that.physicsMark && certificateMark == that.certificateMark && Objects.equals(id, that.id) && Objects.equals(applicantId, that.applicantId);
+        return mathsMark == that.mathsMark && englishMark == that.englishMark && physicsMark == that.physicsMark && certificateMark == that.certificateMark && confirmed == that.confirmed && Objects.equals(id, that.id) && Objects.equals(applicantId, that.applicantId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, applicantId, mathsMark, englishMark, physicsMark, certificateMark);
+        return Objects.hash(id, applicantId, mathsMark, englishMark, physicsMark, certificateMark, confirmed);
     }
 
     @Override
@@ -111,6 +124,7 @@ public class Application {
                 ", englishMark=" + englishMark +
                 ", physicsMark=" + physicsMark +
                 ", certificateMark=" + certificateMark +
+                ", confirmed=" + confirmed +
                 '}';
     }
 }
