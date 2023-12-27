@@ -19,29 +19,37 @@ public class Application {
     @Column(name="physics_mark")
     private int physicsMark;
     @Column(name="certificate_mark")
-    private int certificateMark;
+    private float certificateMark;
+    @Column(name="rating_mark")
+    private float ratingMark;
+    @Column(name="faculty_id")
+    private int facultyID;
     @Column(name="confirmed")
     private int confirmed;
 
     public Application() {
     }
 
-    public Application(Integer id, Integer applicantId, int mathsMark, int englishMark, int physicsMark, int certificateMark) {
+    public Application(Integer id, Integer applicantId, int mathsMark, int englishMark, int physicsMark, float certificateMark, float ratingMark, int facultyID) {
         this.id = id;
         this.applicantId = applicantId;
         this.mathsMark = mathsMark;
         this.englishMark = englishMark;
         this.physicsMark = physicsMark;
         this.certificateMark = certificateMark;
+        this.ratingMark = ratingMark;
+        this.facultyID = facultyID;
         this.confirmed = 0;
     }
 
-    public Application(Integer applicantId, int mathsMark, int englishMark, int physicsMark, int certificateMark) {
+    public Application(Integer applicantId, int mathsMark, int englishMark, int physicsMark, float certificateMark, int facultyID) {
         this.applicantId = applicantId;
         this.mathsMark = mathsMark;
         this.englishMark = englishMark;
         this.physicsMark = physicsMark;
         this.certificateMark = certificateMark;
+        this.ratingMark = (mathsMark + englishMark + physicsMark + (certificateMark / 12 * 100)) / 4;
+        this.facultyID = facultyID;
         this.confirmed = 0;
     }
 
@@ -67,6 +75,7 @@ public class Application {
 
     public void setMathsMark(int mathsMark) {
         this.mathsMark = mathsMark;
+        this.ratingMark = (this.mathsMark + this.englishMark + this.physicsMark + (this.certificateMark / 12 * 100)) / 4;
     }
 
     public int getEnglishMark() {
@@ -75,6 +84,7 @@ public class Application {
 
     public void setEnglishMark(int englishMark) {
         this.englishMark = englishMark;
+        this.ratingMark = (this.mathsMark + this.englishMark + this.physicsMark + (this.certificateMark / 12 * 100)) / 4;
     }
 
     public int getPhysicsMark() {
@@ -83,16 +93,33 @@ public class Application {
 
     public void setPhysicsMark(int physicsMark) {
         this.physicsMark = physicsMark;
+        this.ratingMark = (this.mathsMark + this.englishMark + this.physicsMark + (this.certificateMark / 12 * 100)) / 4;
     }
 
-    public int getCertificateMark() {
+    public float getCertificateMark() {
         return certificateMark;
     }
 
-    public void setCertificateMark(int certificateMark) {
+    public void setCertificateMark(float certificateMark) {
         this.certificateMark = certificateMark;
+        this.ratingMark = (this.mathsMark + this.englishMark + this.physicsMark + (this.certificateMark / 12 * 100)) / 4;
     }
 
+    public float getRatingMark() {
+        return ratingMark;
+    }
+
+    public void setRatingMark(float ratingMark) {
+        this.ratingMark = ratingMark;
+    }
+
+    public int getFacultyID() {
+        return facultyID;
+    }
+
+    public void setFacultyID(int facultyID) {
+        this.facultyID = facultyID;
+    }
 
     public int getConfirmed() {
         return confirmed;
@@ -107,12 +134,12 @@ public class Application {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Application that = (Application) o;
-        return mathsMark == that.mathsMark && englishMark == that.englishMark && physicsMark == that.physicsMark && certificateMark == that.certificateMark && confirmed == that.confirmed && Objects.equals(id, that.id) && Objects.equals(applicantId, that.applicantId);
+        return mathsMark == that.mathsMark && englishMark == that.englishMark && physicsMark == that.physicsMark && Float.compare(certificateMark, that.certificateMark) == 0 && Float.compare(ratingMark, that.ratingMark) == 0 && facultyID == that.facultyID && confirmed == that.confirmed && Objects.equals(id, that.id) && Objects.equals(applicantId, that.applicantId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, applicantId, mathsMark, englishMark, physicsMark, certificateMark, confirmed);
+        return Objects.hash(id, applicantId, mathsMark, englishMark, physicsMark, certificateMark, ratingMark, facultyID, confirmed);
     }
 
     @Override
@@ -124,6 +151,8 @@ public class Application {
                 ", englishMark=" + englishMark +
                 ", physicsMark=" + physicsMark +
                 ", certificateMark=" + certificateMark +
+                ", ratingMark=" + ratingMark +
+                ", facultyID=" + facultyID +
                 ", confirmed=" + confirmed +
                 '}';
     }
