@@ -10,7 +10,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private Integer id;
-    @Column(name="email")
+    @Column(name="email", unique = true)
     private String email;
     @Column(name="password")
     private String password;
@@ -39,6 +39,15 @@ public class User {
         this.name = name;
         this.surname = surname;
         this.role = role;
+    }
+
+    public User(User user) {
+        this.id = user.id;
+        this.email = user.email;
+        this.password = user.password;
+        this.name = user.name;
+        this.surname = user.surname;
+        this.role = user.role;
     }
 
     public Integer getId() {
