@@ -36,7 +36,4 @@ public class UserService {
         else throw new NullPointerException();
     }
 
-    public User updateUser(User user) {
-        return userRepository.save(user);
-    }
 }
