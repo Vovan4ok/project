@@ -25,7 +25,7 @@
                 </div>
                 <ul class="header-list">
                     <li class="header-list-item" style="margin-right: 30px; text-decoration: underline;"><a href="/home" class="header-list-item-link">Main</a></li>
-                    <li class="header-list-item" style="margin-right: 30px;"><a href="/faculties" class="header-list-item-link">See info about faculties</a></li>
+                    <li class="header-list-item" style="margin-right: 30px;"><a href="/userFaculties" class="header-list-item-link">See info about faculties</a></li>
                     <li class="header-list-item"><a href="/application" class="header-list-item-link">Apply for admission</a></li>
                 </ul>
             </c:when>
@@ -36,7 +36,7 @@
                 </div>
                 <ul class="header-list">
                     <li class="header-list-item"><a href="/home" class="header-list-item-link" style="text-decoration: underline; margin-right: 30px;">See new applications</a></li>
-                    <li class="header-list-item"><a href="/faculties" class="header-list-item-link" style="margin-right: 30px;">List of faculties</a></li>
+                    <li class="header-list-item"><a href="/adminFaculties" class="header-list-item-link" style="margin-right: 30px;">List of faculties</a></li>
                     <li class="header-list-item"><a href="/addFaculty" class="header-list-item-link">Add new faculty</a></li>
                 </ul>
             </c:when>

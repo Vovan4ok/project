@@ -29,17 +29,16 @@
     </header>
     <main class="main">
         <h2 class="main-heading">Faculty</h2>
-        <form:form action="addFaculty" class="main-form" method="post">
+        <form:form action="update" class="main-form" method="post" modelAttribute="facultyForm">
             <div class="main-form-block">
-                <span class="main-form-block-label" style="color: red;">${msg}</span>
                 <label for="name" class="main-form-block-label">Name:</label>
-                <input name="name" id="name" type="text" class="main-form-block-input" placeholder="Enter the name of faculty">
+                <input name="name" id="name" type="text" class="main-form-block-input" placeholder="Enter the name of faculty" value="${facultyForm.name}">
             </div>
             <div class="main-form-block">
                 <label for="planNumber" class="main-form-block-label">Plan number:</label>
-                <input name="planNumber" id="planNumber" type="number" class="main-form-block-input" placeholder="Enter the plan number">
+                <input name="planNumber" id="planNumber" type="number" class="main-form-block-input" placeholder="Enter the plan number" value="${facultyForm.planNumber}">
             </div>
-            <input class="main-form-submit-block-button" type="submit" value="Add faculty">
+            <input class="main-form-submit-block-button" style="width: 145px;" type="submit" value="Update faculty">
         </form:form>
     </main>
     <footer class="footer">
