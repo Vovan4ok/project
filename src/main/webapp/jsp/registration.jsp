@@ -38,9 +38,9 @@
                 <input name="surname" type="text" id="surname" class="main-form-block-input" placeholder="Enter your surname">
             </div>
             <div class="main-form-block">
+                <span class="main-form-block-label">${msg}</span>
                 <label for="email" class="main-form-block-label">Email:</label>
                 <input name="email" type="email" id="email" class="main-form-block-input" placeholder="Enter your email">
-                <span class="main-form-block-label">${msg}</span>
             </div>
             <div class="main-form-block">
                 <label for="password" class="main-form-block-label">Password:</label>

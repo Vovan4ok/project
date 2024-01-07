@@ -28,7 +28,7 @@
     </header>
     <main class="main">
         <h2 class="main-heading">Log In!</h2>
-        <form:form name="f" action="/login>" class="main-form" method="post">
+        <form:form name="f" action="/login" class="main-form" method="post">
             <div class="main-form-block">
                 <label for="email" class="main-form-block-label">Email:</label>
                 <input name="email" type="email" id="email" class="main-form-block-input" placeholder="Enter your email">

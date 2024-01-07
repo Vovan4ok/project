@@ -1,6 +1,7 @@
 package project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,7 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 public class UserController {
     @Autowired
     private UserService userService;
-    private User user = null;
+
+    private User user;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
@@ -49,9 +51,9 @@ public class UserController {
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String home(Model model, HttpServletRequest request) {
-        request.getSession(true).setAttribute("user", user);
-        request.setAttribute("role", user.getRole());
+    public String home(Model model, @AuthenticationPrincipal User user) {
+        this.user = userService.getUserByEmail(user.getEmail());
+        model.addAttribute("role", this.user.getRole());
         return "home";
     }
 }

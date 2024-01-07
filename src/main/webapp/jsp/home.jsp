@@ -19,25 +19,25 @@
     <header class="header">
         <c:choose>
             <c:when test="${role == 'DEFAULT'}">
-                <div class="admin-header-logo-block">
+                <div class="header-logo-block">
                     <img src="../images/knu-logo.png" alt="knu logo" class="header-logo">
                     <h1 class="header-heading">Admission to KNU</h1>
                 </div>
                 <ul class="header-list">
-                    <li class="header-list-item" style="margin-right: 30px; text-decoration: underline;"><a href="#" class="header-list-item-link">Main</a></li>
-                    <li class="header-list-item" style="margin-right: 30px;"><a href="#" class="header-list-item-link">See info about faculties</a></li>
-                    <li class="header-list-item"><a href="#" class="header-list-item-link">Apply for admission</a></li>
+                    <li class="header-list-item" style="margin-right: 30px; text-decoration: underline;"><a href="/home" class="header-list-item-link">Main</a></li>
+                    <li class="header-list-item" style="margin-right: 30px;"><a href="/faculties" class="header-list-item-link">See info about faculties</a></li>
+                    <li class="header-list-item"><a href="/application" class="header-list-item-link">Apply for admission</a></li>
                 </ul>
             </c:when>
             <c:when test="${role == 'ADMIN'}">
-                <div class="header-logo-block">
+                <div class="header-logo-block admin-header-logo-block">
                     <img src="../images/knu-logo.png" alt="knu logo" class="header-logo">
                     <h1 class="header-heading">Administration</h1>
                 </div>
                 <ul class="header-list">
-                    <li class="header-list-item"><a href="#" class="header-list-item-link" style="text-decoration: underline; margin-right: 30px;">See new applications</a></li>
-                    <li class="header-list-item"><a href="#" class="header-list-item-link" style="margin-right: 30px;">List of faculties</a></li>
-                    <li class="header-list-item"><a href="#" class="header-list-item-link">Add new faculty</a></li>
+                    <li class="header-list-item"><a href="/home" class="header-list-item-link" style="text-decoration: underline; margin-right: 30px;">See new applications</a></li>
+                    <li class="header-list-item"><a href="/faculties" class="header-list-item-link" style="margin-right: 30px;">List of faculties</a></li>
+                    <li class="header-list-item"><a href="/addFaculty" class="header-list-item-link">Add new faculty</a></li>
                 </ul>
             </c:when>
         </c:choose>
@@ -53,37 +53,39 @@
         </main>
         </c:when>
         <c:when test="${role == 'ADMIN'}">
-            <h1 class="main-heading">FIT Faculty</h1>
-            <table class="main-table">
-                <thead class="table-thead">
-                <tr class="table-row">
-                    <th class="table-name-column table-th">Name</th>
-                    <th class="table-surname-column table-th">Surname</th>
-                    <th class="table-maths-column table-th">Maths</th>
-                    <th class="table-english-column table-th">English</th>
-                    <th class="table-physics-column table-th">Physics</th>
-                    <th class="table-certificate-column table-th">Certificate</th>
-                    <th class="table-rating-column table-th">Rating</th>
-                    <th class="table-faculty-column table-th">Faculty Name</th>
-                    <th class="table-button-column table-th"></th>
-                </tr>
-                </thead>
-                <tbody class="table-tbody">
-                <tr class="table-row">
-                    <td class="table-name-column table-td">Volodymyr</td>
-                    <td class="table-surname-column table-td">Zganyayko</td>
-                    <td class="table-maths-column table-td">197</td>
-                    <td class="table-english-column table-td">200</td>
-                    <td class="table-physics-column table-td">189</td>
-                    <td class="table-certificate-column table-td">10.9</td>
-                    <td class="table-rating-column table-td">194.7</td>
-                    <td class="table-faculty-column table-td">FIT</td>
-                    <td class="table-button-column table-td">
-                        <button class="table-button-column-button">Accept</button>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
+            <main class="main">
+                <h1 class="main-heading">FIT Faculty</h1>
+                <table class="main-table">
+                    <thead class="table-thead">
+                        <tr class="table-row">
+                            <th class="table-name-column table-th">Name</th>
+                            <th class="table-surname-column table-th">Surname</th>
+                            <th class="table-maths-column table-th">Maths</th>
+                            <th class="table-english-column table-th">English</th>
+                            <th class="table-physics-column table-th">Physics</th>
+                            <th class="table-certificate-column table-th">Certificate</th>
+                            <th class="table-rating-column table-th">Rating</th>
+                            <th class="table-faculty-column table-th">Faculty Name</th>
+                            <th class="table-button-column table-th"></th>
+                        </tr>
+                    </thead>
+                    <tbody class="table-tbody">
+                        <tr class="table-row">
+                            <td class="table-name-column table-td">Volodymyr</td>
+                            <td class="table-surname-column table-td">Zganyayko</td>
+                            <td class="table-maths-column table-td">197</td>
+                            <td class="table-english-column table-td">200</td>
+                            <td class="table-physics-column table-td">189</td>
+                            <td class="table-certificate-column table-td">10.9</td>
+                            <td class="table-rating-column table-td">194.7</td>
+                            <td class="table-faculty-column table-td">FIT</td>
+                            <td class="table-button-column table-td">
+                                <button class="table-button-column-button">Accept</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </main>
         </c:when>
     </c:choose>
     <footer class="footer">
