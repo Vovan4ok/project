@@ -44,7 +44,7 @@
             </thead>
             <tbody class="table-tbody">
                 <c:forEach var="application" items="${applications}">
-                    <tr class="table-row">
+                    <tr class="table-row" <c:if test="${application.place <= faculty.planNumber}">style="background-color: #89db8e" </c:if>>
                         <td class="table-td">${application.place}</td>
                         <td class="table-td">${application.applicantName}</td>
                         <td class="table-td">${application.applicantSurname}</td>
