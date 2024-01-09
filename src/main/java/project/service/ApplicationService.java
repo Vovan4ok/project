@@ -8,7 +8,7 @@ import project.domain.User;
 
 import java.util.List;
 
-@Service("applicationService")
+@Service("aplicationService")
 public class ApplicationService {
     @Autowired
     private ApplicationRepository applicationRepository;
@@ -27,8 +27,8 @@ public class ApplicationService {
     public Application findById(Integer id) {
         return applicationRepository.findById(id).get();
     }
-    public List<Application> readAllByFacultyId(Integer facultyId) {
-        return applicationRepository.readAllByFacultyIDOrderByRatingMark(facultyId);
+    public List<Application> getApplicationsByFaculty(Integer facultyId, int confirmed) {
+        return applicationRepository.readAllByFacultyIDAndConfirmedOrderByRatingMarkDesc(facultyId, confirmed);
     }
 
     public void update(Application application) {

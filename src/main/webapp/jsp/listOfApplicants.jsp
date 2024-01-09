@@ -9,8 +9,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculties</title>
-    <link rel="stylesheet" href="../styles/userFaculties.css">
+    <title>List</title>
+    <link rel="stylesheet" href="../styles/listOfApplicants.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
 </head>
 
@@ -22,28 +22,37 @@
             <h1 class="header-heading">Admission to KNU</h1>
         </div>
         <ul class="header-list">
-            <li class="header-list-item" style="margin-right: 30px;"><a href="/home" class="header-list-item-link">Main</a></li>
-            <li class="header-list-item" style="margin-right: 30px;"><a href="/userFaculties" class="header-list-item-link" style="text-decoration: underline;">See info about faculties</a></li>
-            <li class="header-list-item"><a href="/application" class="header-list-item-link">Apply for admission</a></li>
+            <li class="header-list-item" style="margin-right: 30px;"><a href="#" class="header-list-item-link">Main</a></li>
+            <li class="header-list-item" style="margin-right: 30px;"><a href="#" class="header-list-item-link">See info about faculties</a></li>
+            <li class="header-list-item"><a href="#" class="header-list-item-link">Apply for admission</a></li>
         </ul>
     </header>
     <main class="main">
+        <h1 class="main-heading">${faculty.name} Faculty</h1>
         <table class="main-table">
             <thead class="table-thead">
                 <tr class="table-row">
-                    <th class="table-number-column table-th">Id</th>
-                    <th class="table-faculty-column table-th">Faculty Name</th>
-                    <th class="table-plan-column table-th">Plan number</th>
-                    <th class="table-list-column"></th>
+                    <th class="table-th">#</th>
+                    <th class="table-th">Name</th>
+                    <th class="table-th">Surname</th>
+                    <th class="table-th">Maths</th>
+                    <th class="table-th">English</th>
+                    <th class="table-th">Physics</th>
+                    <th class="table-th">Certificate</th>
+                    <th class="table-th">Rating</th>
                 </tr>
             </thead>
             <tbody class="table-tbody">
-                <c:forEach var="faculty" items="${faculties}">
+                <c:forEach var="application" items="${applications}">
                     <tr class="table-row">
-                        <td class="table-number-column table-td">${faculty.id}</td>
-                        <td class="table-faculty-column table-td">${faculty.name}</td>
-                        <td class="table-plan-column table-td">${faculty.planNumber}</td>
-                        <td class="table-list-column table-td"><a href="/listOfApplicants?id=${faculty.id}" class="table-link">Check list of applicants</a></td>
+                        <td class="table-td">${application.place}</td>
+                        <td class="table-td">${application.applicantName}</td>
+                        <td class="table-td">${application.applicantSurname}</td>
+                        <td class="table-td">${application.mathsMark}</td>
+                        <td class="table-td">${application.englishMark}</td>
+                        <td class="table-td">${application.physicsMark}</td>
+                        <td class="table-td">${application.certificateMark}</td>
+                        <td class="table-td">${application.ratingMark}</td>
                     </tr>
                 </c:forEach>
             </tbody>

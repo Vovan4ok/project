@@ -29,6 +29,9 @@ public class UserService {
         return false;
     }
 
+    public User findById(Integer id) {
+        return userRepository.findById(id).get();
+    }
     public User getUserByEmail(String email) {
         if (userRepository.findByEmail(email).isPresent()) {
             return userRepository.findByEmail(email).get();

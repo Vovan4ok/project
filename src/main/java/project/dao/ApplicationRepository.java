@@ -11,7 +11,7 @@ import java.util.Optional;
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
     Optional<Application> findById(Integer integer);
 
-    List<Application> readAllByFacultyIDOrderByRatingMark(Integer facultyId);
+    List<Application> readAllByFacultyIDAndConfirmedOrderByRatingMarkDesc(int facultyID, int confirmed);
 
     List<Application> readAllByConfirmed(Integer confirmed);
 }
