@@ -109,8 +109,8 @@ public class Application {
         return ratingMark;
     }
 
-    public void setRatingMark(float ratingMark) {
-        this.ratingMark = ratingMark;
+    public void setRatingMark() {
+        this.ratingMark = (this.mathsMark + this.englishMark + this.physicsMark + (this.certificateMark / 12 * 200)) / 4;
     }
 
     public int getFacultyID() {

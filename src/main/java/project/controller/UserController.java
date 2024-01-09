@@ -51,8 +51,11 @@ public class UserController {
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String home(Model model, @AuthenticationPrincipal User user) {
-        this.user = userService.getUserByEmail(user.getEmail());
+    public String home(Model model, @AuthenticationPrincipal User userPrincipal, HttpServletRequest request) {
+        if(this.user == null) {
+            user = userService.getUserByEmail(userPrincipal.getEmail());
+        }
+        request.getSession(true).setAttribute("user", user);
         model.addAttribute("role", this.user.getRole());
         return "home";
     }

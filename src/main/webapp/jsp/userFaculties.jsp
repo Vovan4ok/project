@@ -9,8 +9,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add</title>
-    <link rel="stylesheet" href="../styles/facultyForm.css">
+    <title>Faculties</title>
+    <link rel="stylesheet" href="../styles/userFaculties.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
 </head>
 
@@ -19,28 +19,35 @@
     <header class="header">
         <div class="header-logo-block">
             <img src="../images/knu-logo.png" alt="knu logo" class="header-logo">
-            <h1 class="header-heading">Administrator</h1>
+            <h1 class="header-heading">Admission to KNU</h1>
         </div>
         <ul class="header-list">
-            <li class="header-list-item"><a href="/home" class="header-list-item-link" style="margin-right: 30px;">See new applications</a></li>
-            <li class="header-list-item"><a href="/adminFaculties" class="header-list-item-link" style="margin-right: 30px;">List of faculties</a></li>
-            <li class="header-list-item"><a href="/addFaculty" class="header-list-item-link" style="text-decoration: underline;">Add new faculty</a></li>
+            <li class="header-list-item" style="margin-right: 30px;"><a href="/home" class="header-list-item-link">Main</a></li>
+            <li class="header-list-item" style="margin-right: 30px;"><a href="/userFaculties" class="header-list-item-link" style="text-decoration: underline;">See info about faculties</a></li>
+            <li class="header-list-item"><a href="/application" class="header-list-item-link">Apply for admission</a></li>
         </ul>
     </header>
     <main class="main">
-        <h2 class="main-heading">Faculty</h2>
-        <form:form action="update" class="main-form" method="post" modelAttribute="facultyForm">
-            <input id="id" name="id" style="display: none;" value="${facultyForm.id}" type="number"/>
-            <div class="main-form-block">
-                <label for="name" class="main-form-block-label">Name:</label>
-                <input name="name" id="name" type="text" class="main-form-block-input" placeholder="Enter the name of faculty" value="${facultyForm.name}">
-            </div>
-            <div class="main-form-block">
-                <label for="planNumber" class="main-form-block-label">Plan number:</label>
-                <input name="planNumber" id="planNumber" type="number" class="main-form-block-input" placeholder="Enter the plan number" value="${facultyForm.planNumber}">
-            </div>
-            <input class="main-form-submit-block-button" style="width: 145px;" type="submit" value="Update faculty">
-        </form:form>
+        <table class="main-table">
+            <thead class="table-thead">
+                <tr class="table-row">
+                    <th class="table-number-column table-th">Id</th>
+                    <th class="table-faculty-column table-th">Faculty Name</th>
+                    <th class="table-plan-column table-th">Plan number</th>
+                    <th class="table-list-column"></th>
+                </tr>
+            </thead>
+            <tbody class="table-tbody">
+                <c:forEach var="faculty" items="${faculties}">
+                    <tr class="table-row">
+                        <td class="table-number-column table-td">${faculty.id}</td>
+                        <td class="table-faculty-column table-td">${faculty.name}</td>
+                        <td class="table-plan-column table-td">${faculty.planNumber}</td>
+                        <td class="table-list-column table-td"><a href="/facultyList?id=${faculty.id}" class="table-link">Check list of applicants</a></td>
+                    </tr>
+                </c:forEach>
+            </tbody>
+        </table>
     </main>
     <footer class="footer">
         <ul class="footer-list">

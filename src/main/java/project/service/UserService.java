@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import project.dao.UserRepository;
 import project.domain.User;
 
-@Service
+@Service("userService")
 public class UserService {
     @Autowired
     private final UserRepository userRepository;

@@ -6,19 +6,18 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import project.domain.Faculty;
-import project.domain.User;
 import project.service.FacultyService;
 import project.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 
 @Controller
-public class FacultyController {
+public class AdminFacultyController {
     @Autowired
-    FacultyService facultyService;
+    private FacultyService facultyService;
 
     @Autowired
-    UserService userService;
+    private UserService userService;
 
     @RequestMapping(value = "/addFaculty", method = RequestMethod.GET)
     public String addFaculty(Model model) {

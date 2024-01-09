@@ -7,7 +7,7 @@ import project.domain.Faculty;
 
 import java.util.List;
 
-@Service
+@Service("facultyService")
 public class FacultyService {
     @Autowired
     FacultyRepository facultyRepository;
@@ -31,7 +31,7 @@ public class FacultyService {
     }
 
     public void update(Faculty faculty) {
-        facultyRepository.save(faculty);
+        facultyRepository.saveAndFlush(faculty);
     }
 
     public void delete(Integer id) {
