@@ -18,7 +18,7 @@
             <h1 class="header-heading">Admission to KNU</h1>
         </div>
         <ul class="header-list">
-            <li class="header-list-item" style="margin-right: 75px;"><a href="" class="header-list-item-link">All about admission</a></li>
+            <li class="header-list-item" style="margin-right: 75px;"><a href="#" class="header-list-item-link">All about admission</a></li>
             <li class="header-list-item"><a href="#" class="header-list-item-link">Faculties ratings</a></li>
         </ul>
     </header>

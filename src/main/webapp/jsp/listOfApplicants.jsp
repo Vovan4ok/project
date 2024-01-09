@@ -22,9 +22,9 @@
             <h1 class="header-heading">Admission to KNU</h1>
         </div>
         <ul class="header-list">
-            <li class="header-list-item" style="margin-right: 30px;"><a href="#" class="header-list-item-link">Main</a></li>
-            <li class="header-list-item" style="margin-right: 30px;"><a href="#" class="header-list-item-link">See info about faculties</a></li>
-            <li class="header-list-item"><a href="#" class="header-list-item-link">Apply for admission</a></li>
+            <li class="header-list-item" style="margin-right: 30px;"><a href="/home" class="header-list-item-link">Main</a></li>
+            <li class="header-list-item" style="margin-right: 30px;"><a href="/userFaculties" class="header-list-item-link">See info about faculties</a></li>
+            <li class="header-list-item"><a href="/application" class="header-list-item-link">Apply for admission</a></li>
         </ul>
     </header>
     <main class="main">

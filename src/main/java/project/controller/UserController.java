@@ -8,16 +8,29 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import project.domain.Application;
+import project.domain.ApplicationModel;
+import project.domain.Faculty;
 import project.domain.User;
+import project.service.ApplicationService;
+import project.service.FacultyService;
 import project.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class UserController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private FacultyService facultyService;
+
+    @Autowired
+    private ApplicationService applicationService;
     private User user;
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
@@ -53,10 +66,40 @@ public class UserController {
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Model model, @AuthenticationPrincipal User userPrincipal, HttpServletRequest request) {
         if(this.user == null) {
-            user = userService.getUserByEmail(userPrincipal.getEmail());
+            this.user = userService.getUserByEmail(userPrincipal.getEmail());
         }
         request.getSession(true).setAttribute("user", user);
         model.addAttribute("role", this.user.getRole());
+        if(this.user.getRole().equals("ADMIN")) {
+            List<Application> applications = applicationService.readAllByConfirmed(0);
+            List<ApplicationModel> applicationModels = new ArrayList<>();
+            for(Application application : applications) {
+                User applicant = userService.findById(application.getApplicantId());
+                Faculty faculty = facultyService.readById(application.getFacultyID());
+                ApplicationModel applicationModel = new ApplicationModel();
+
+                applicationModel.setApplicationId(application.getId());
+                applicationModel.setApplicantName(applicant.getName());
+                applicationModel.setApplicantSurname(applicant.getSurname());
+                applicationModel.setMathsMark(application.getMathsMark());
+                applicationModel.setEnglishMark(application.getEnglishMark());
+                applicationModel.setPhysicsMark(application.getPhysicsMark());
+                applicationModel.setCertificateMark(application.getCertificateMark());
+                applicationModel.setRatingMark(application.getRatingMark());
+                applicationModel.setFacultyName(faculty.getName());
+
+                applicationModels.add(applicationModel);
+            }
+            model.addAttribute("applications", applicationModels);
+        }
         return "home";
+    }
+
+    @RequestMapping(value = "/acceptApplication", method = RequestMethod.GET)
+    public String acceptApplication(@RequestParam("id") Integer id, Model model) {
+        Application application = applicationService.findById(id);
+        application.setConfirmed(1);
+        applicationService.update(application);
+        return "redirect:/home";
     }
 }

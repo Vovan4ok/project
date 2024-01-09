@@ -70,19 +70,21 @@
                         </tr>
                     </thead>
                     <tbody class="table-tbody">
-                        <tr class="table-row">
-                            <td class="table-name-column table-td">Volodymyr</td>
-                            <td class="table-surname-column table-td">Zganyayko</td>
-                            <td class="table-maths-column table-td">197</td>
-                            <td class="table-english-column table-td">200</td>
-                            <td class="table-physics-column table-td">189</td>
-                            <td class="table-certificate-column table-td">10.9</td>
-                            <td class="table-rating-column table-td">194.7</td>
-                            <td class="table-faculty-column table-td">FIT</td>
-                            <td class="table-button-column table-td">
-                                <button class="table-button-column-button">Accept</button>
-                            </td>
-                        </tr>
+                        <c:forEach var="application" items="${applications}">
+                            <tr class="table-row">
+                                <td class="table-name-column table-td">${application.applicantName}</td>
+                                <td class="table-surname-column table-td">${application.applicantSurname}</td>
+                                <td class="table-maths-column table-td">${application.mathsMark}</td>
+                                <td class="table-english-column table-td">${application.englishMark}</td>
+                                <td class="table-physics-column table-td">${application.physicsMark}</td>
+                                <td class="table-certificate-column table-td">${application.certificateMark}</td>
+                                <td class="table-rating-column table-td">${application.ratingMark}</td>
+                                <td class="table-faculty-column table-td">${application.facultyName}</td>
+                                <td class="table-button-column table-td">
+                                    <a href="acceptApplication?id=${application.applicationId}" class="table-button-column-button">Accept</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
                     </tbody>
                 </table>
             </main>

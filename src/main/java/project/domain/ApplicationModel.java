@@ -1,6 +1,7 @@
 package project.domain;
 
 public class ApplicationModel {
+    private Integer applicationId;
     private int place;
     private String applicantName;
     private String applicantSurname;
@@ -9,6 +10,7 @@ public class ApplicationModel {
     private int physicsMark;
     private float certificateMark;
     private float ratingMark;
+    private String facultyName;
 
     public int getPlace() {
         return place;
@@ -74,4 +76,19 @@ public class ApplicationModel {
         this.ratingMark = ratingMark;
     }
 
+    public Integer getApplicationId() {
+        return applicationId;
+    }
+
+    public void setApplicationId(Integer applicationId) {
+        this.applicationId = applicationId;
+    }
+
+    public String getFacultyName() {
+        return facultyName;
+    }
+
+    public void setFacultyName(String facultyName) {
+        this.facultyName = facultyName;
+    }
 }
