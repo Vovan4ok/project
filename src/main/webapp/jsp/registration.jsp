@@ -28,27 +28,28 @@
     </header>
     <main class="main">
         <h2 class="main-heading">Sign up!</h2>
-        <form:form action="registration" class="main-form" method="post" modelAttribute="userForm">
+        <form:form action="registration" class="main-form" method="post" enctype="multipart/form-data">
             <div class="main-form-block">
                 <label for="name" class="main-form-block-label">Name:</label>
-                <input name="name" type="text" id="name" class="main-form-block-input" placeholder="Enter your name">
+                <input name="name" type="text" id="name" class="main-form-block-input" placeholder="Enter your name" required>
             </div>
             <div class="main-form-block">
                 <label for="surname" class="main-form-block-label">Surname:</label>
-                <input name="surname" type="text" id="surname" class="main-form-block-input" placeholder="Enter your surname">
+                <input name="surname" type="text" id="surname" class="main-form-block-input" placeholder="Enter your surname" required>
             </div>
             <div class="main-form-block">
                 <span class="main-form-block-label" style="color: red;">${msg}</span>
                 <label for="email" class="main-form-block-label">Email:</label>
-                <input name="email" type="email" id="email" class="main-form-block-input" placeholder="Enter your email">
+                <input name="email" type="email" id="email" class="main-form-block-input" placeholder="Enter your email" required>
             </div>
             <div class="main-form-block">
                 <label for="password" class="main-form-block-label">Password:</label>
                 <input name="password" type="password" id="password" class="main-form-block-input"
-                       placeholder="Enter your password">
+                       placeholder="Enter your password" required>
             </div>
+            <input name="imageFile" id="imageFile" style="margin-top: 15px; margin-right: 65px;" type="file" required>
             <div class="main-form-submit-block">
-                <input class="main-form-submit-block-button" type="submit" value="Sign up"/>
+                <input class="main-form-submit-block-button" type="submit" value="Sign up">
                 <span class="main-form-submit-block-span">
                         Have an account? <a href="/login" class="main-form-submit-block-span-link">Log In</a>
                 </span>

@@ -12,6 +12,7 @@ import project.domain.Application;
 import project.domain.ApplicationModel;
 import project.domain.Faculty;
 import project.domain.User;
+import project.service.ApplicationModelDTOHelper;
 import project.service.ApplicationService;
 import project.service.FacultyService;
 import project.service.UserService;
@@ -32,7 +33,8 @@ public class ApplicationController {
     private UserService userService;
 
     @RequestMapping(value="/application", method = RequestMethod.GET)
-    public String application(Model model) {
+    public String application(Model model, HttpServletRequest request) {
+        request.setAttribute("user", (User) request.getSession().getAttribute("user"));
         model.addAttribute("faculties", facultyService.readAll());
         model.addAttribute("applicationForm", new Application());
         return "application";
@@ -51,24 +53,26 @@ public class ApplicationController {
     }
 
     @RequestMapping(value = "/listOfApplicants", method = RequestMethod.GET)
-    public String listOfApplicants(@RequestParam("id") Integer id, Model model) {
+    public String listOfApplicants(@RequestParam("id") Integer id, Model model, HttpServletRequest request) {
         List<Application> applications = applicationService.getApplicationsByFaculty(id, 1);
         List<ApplicationModel> applicationModels = new ArrayList<>();
         int place = 1;
         for(Application application : applications) {
-            ApplicationModel applicationModel = new ApplicationModel();
-            User user = userService.findById(application.getApplicantId());
-            applicationModel.setPlace(place);
-            applicationModel.setApplicantName(user.getName());
-            applicationModel.setApplicantSurname(user.getSurname());
-            applicationModel.setMathsMark(application.getMathsMark());
-            applicationModel.setEnglishMark(application.getEnglishMark());
-            applicationModel.setPhysicsMark(application.getPhysicsMark());
-            applicationModel.setCertificateMark(application.getCertificateMark());
-            applicationModel.setRatingMark(application.getRatingMark());
-            applicationModels.add(applicationModel);
+            User applicant = userService.findById(application.getApplicantId());
+
+            applicationModels.add(ApplicationModelDTOHelper.createEntityForUser(
+                    place,
+                    applicant.getName(),
+                    applicant.getSurname(),
+                    application.getMathsMark(),
+                    application.getEnglishMark(),
+                    application.getPhysicsMark(),
+                    application.getCertificateMark(),
+                    application.getRatingMark()
+            ));
             place++;
         }
+        request.setAttribute("user", (User) request.getSession().getAttribute("user"));
         model.addAttribute("applications", applicationModels);
         model.addAttribute("faculty", facultyService.readById(id));
         return "listOfApplicants";

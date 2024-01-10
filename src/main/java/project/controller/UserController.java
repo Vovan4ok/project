@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import project.domain.Application;
 import project.domain.ApplicationModel;
 import project.domain.Faculty;
 import project.domain.User;
-import project.service.ApplicationService;
-import project.service.FacultyService;
-import project.service.UserService;
+import project.service.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -35,15 +35,18 @@ public class UserController {
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
-        model.addAttribute("userForm", new User());
         return "registration";
     }
 
     @RequestMapping(value="/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm, BindingResult bindingResult, Model model) {
-        if(bindingResult.hasErrors()) {
-            return "registration";
-        }
+    public String registration(
+            @RequestParam("name") String name,
+            @RequestParam("surname") String surname,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password,
+            @RequestParam("imageFile") MultipartFile image,
+            Model model) throws IOException {
+        User userForm = UserDTOHelper.createUser(name, surname, email, password, image);
         if(userService.save(userForm)) {
             user = userService.getUserByEmail(userForm.getEmail());
             return "redirect:/home";
@@ -78,17 +81,17 @@ public class UserController {
                 Faculty faculty = facultyService.readById(application.getFacultyID());
                 ApplicationModel applicationModel = new ApplicationModel();
 
-                applicationModel.setApplicationId(application.getId());
-                applicationModel.setApplicantName(applicant.getName());
-                applicationModel.setApplicantSurname(applicant.getSurname());
-                applicationModel.setMathsMark(application.getMathsMark());
-                applicationModel.setEnglishMark(application.getEnglishMark());
-                applicationModel.setPhysicsMark(application.getPhysicsMark());
-                applicationModel.setCertificateMark(application.getCertificateMark());
-                applicationModel.setRatingMark(application.getRatingMark());
-                applicationModel.setFacultyName(faculty.getName());
-
-                applicationModels.add(applicationModel);
+                applicationModels.add(ApplicationModelDTOHelper.createEntityForAdmin(
+                        application.getId(),
+                        applicant.getName(),
+                        applicant.getSurname(),
+                        application.getMathsMark(),
+                        application.getEnglishMark(),
+                        application.getPhysicsMark(),
+                        application.getCertificateMark(),
+                        application.getRatingMark(),
+                        faculty.getName()
+                ));
             }
             model.addAttribute("applications", applicationModels);
         }

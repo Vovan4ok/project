@@ -18,7 +18,7 @@
 <div class="container">
     <header class="header">
         <div class="header-logo-block">
-            <img src="../images/knu-logo.png" alt="knu logo" class="header-logo">
+            <img src="data:image/jpg;base64, ${user.encodedImage}" alt="User avatar" class="header-logo">
             <h1 class="header-heading">Admission to KNU</h1>
         </div>
         <ul class="header-list">

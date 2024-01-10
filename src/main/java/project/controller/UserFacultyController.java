@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import project.domain.User;
 import project.service.ApplicationService;
 import project.service.FacultyService;
 import project.service.UserService;
@@ -23,6 +24,7 @@ public class UserFacultyController {
 
     @RequestMapping(value="userFaculties", method = RequestMethod.GET)
     public String userFaculties(HttpServletRequest request) {
+        request.setAttribute("user", (User) request.getSession().getAttribute("user"));
         request.setAttribute("faculties", facultyService.readAll());
         return "userFaculties";
     }

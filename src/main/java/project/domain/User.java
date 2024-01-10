@@ -21,6 +21,12 @@ public class User {
     @Column(name="role")
     private String role;
 
+    @Lob
+    private byte[] image;
+
+    @Lob
+    private String encodedImage;
+
     public User() {
     }
 
@@ -97,6 +103,21 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+    public byte[] getImage() {
+        return image;
+    }
+
+    public void setImage(byte[] image) {
+        this.image = image;
+    }
+
+    public String getEncodedImage() {
+        return encodedImage;
+    }
+
+    public void setEncodedImage(String encodedImage) {
+        this.encodedImage = encodedImage;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -122,4 +143,6 @@ public class User {
                 ", role='" + role + '\'' +
                 '}';
     }
+
+
 }
