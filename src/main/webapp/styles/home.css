@@ -92,6 +92,7 @@
     color: #000;
     font-family: 'Itim';
     font-size: 15px;
+    text-decoration: none;
     border: none;
     cursor: pointer;
     transition: 0.5s background-color;

@@ -1,6 +1,7 @@
 package project.domain;
 
 import javax.persistence.*;
+import java.util.Arrays;
 import java.util.Objects;
 
 @Entity
@@ -132,6 +133,7 @@ public class User {
         return Objects.hash(id, email, password, name, surname, role);
     }
 
+
     @Override
     public String toString() {
         return "User{" +
@@ -141,8 +143,7 @@ public class User {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", role='" + role + '\'' +
+                ", image=" + Arrays.toString(image) + '\'' +
                 '}';
     }
-
-
 }

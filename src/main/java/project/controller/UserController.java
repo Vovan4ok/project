@@ -1,5 +1,7 @@
 package project.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
@@ -32,9 +34,11 @@ public class UserController {
     @Autowired
     private ApplicationService applicationService;
     private User user;
+    Logger logger = LoggerFactory.getLogger(UserController.class);
 
     @RequestMapping(value = "/registration", method = RequestMethod.GET)
     public String registration(Model model) {
+        logger.info("The user is on the registration page.");
         return "registration";
     }
 
@@ -46,12 +50,15 @@ public class UserController {
             @RequestParam("password") String password,
             @RequestParam("imageFile") MultipartFile image,
             Model model) throws IOException {
+        logger.info("User is trying to register");
         User userForm = UserDTOHelper.createUser(name, surname, email, password, image);
         if(userService.save(userForm)) {
             user = userService.getUserByEmail(userForm.getEmail());
+            logger.info("Redirecting to the home page.");
             return "redirect:/home";
         }
         model.addAttribute("msg", "This email already exists!");
+        logger.info("Registration wasn't successful.");
         return "registration";
     }
 
@@ -63,11 +70,13 @@ public class UserController {
         if(logout != null) {
             model.addAttribute("message", "You have been logged out");
         }
+        logger.info("User is on the login page.");
         return "login";
     }
 
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String home(Model model, @AuthenticationPrincipal User userPrincipal, HttpServletRequest request) {
+        logger.info("User is on the home page.");
         if(this.user == null) {
             this.user = userService.getUserByEmail(userPrincipal.getEmail());
         }
@@ -79,7 +88,6 @@ public class UserController {
             for(Application application : applications) {
                 User applicant = userService.findById(application.getApplicantId());
                 Faculty faculty = facultyService.readById(application.getFacultyID());
-                ApplicationModel applicationModel = new ApplicationModel();
 
                 applicationModels.add(ApplicationModelDTOHelper.createEntityForAdmin(
                         application.getId(),
@@ -100,9 +108,11 @@ public class UserController {
 
     @RequestMapping(value = "/acceptApplication", method = RequestMethod.GET)
     public String acceptApplication(@RequestParam("id") Integer id, Model model) {
+        logger.info("Admin is confirming the application with the id = " + id + ".");
         Application application = applicationService.findById(id);
         application.setConfirmed(1);
         applicationService.update(application);
+        logger.info("The confirmation is successful.");
         return "redirect:/home";
     }
 }
