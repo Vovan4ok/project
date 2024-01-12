@@ -64,15 +64,16 @@
 }
 .main-form-submit-block{
     margin-top: 28px;
-    width: 265px;
+    width: fit-content;
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
     align-items: center;
 }
 .main-form-submit-block-button{
-    width: 120px;
+    width: 160px;
     height: 40px;
+    margin-right: 30px;
     border-radius: 10px;
     background-color: #DCFDFF;
     color: black;
@@ -93,6 +94,8 @@
     color: #9F9D9D;
     font-family: 'Itim';
     font-size: 13px;
+    display: block;
+    width: 90px;
 }
 .main-form-submit-block-span-link{
     color: black;

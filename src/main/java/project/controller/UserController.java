@@ -83,7 +83,7 @@ public class UserController {
         }
         request.getSession(true).setAttribute("user", user);
         model.addAttribute("role", this.user.getRole().toString());
-        if(this.user.getRole().toString().equals("ADMIN")) {
+        if(this.user.getRole().toString().equals("ROLE_ADMIN")) {
             List<Application> applications = applicationService.readAllByConfirmed(0);
             List<ApplicationModel> applicationModels = new ArrayList<>();
             for(Application application : applications) {
