@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import project.dao.UserRepository;
+import project.domain.Role;
 import project.domain.User;
 
 import org.slf4j.Logger;
@@ -26,7 +27,7 @@ public class UserService {
     public boolean save(User user) {
         if (!userRepository.existsByEmail(user.getEmail())) {
             user.setPassword(passwordEncoder.encode(user.getPassword()));
-            user.setRole("DEFAULT");
+            user.setRole(Role.ROLE_USER);
             userRepository.save(user);
             logger.info("Saving the user " + user + " to DB.");
             return true;

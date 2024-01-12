@@ -12,6 +12,8 @@
     <title>Login</title>
     <link rel="stylesheet" href="../styles/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/i18n.js"></script>
 </head>
 
 <body class="body">
@@ -19,29 +21,33 @@
     <header class="header">
         <div class="header-logo-block">
             <img src="../images/knu-logo.png" alt="knu logo" class="header-logo">
-            <h1 class="header-heading">Admission to KNU</h1>
+            <h1 class="header-heading"><spring:message code="enter.header-heading"/></h1>
         </div>
         <ul class="header-list">
-            <li class="header-list-item" style="margin-right: 75px;"><a href="" class="header-list-item-link">All about admission</a></li>
-            <li class="header-list-item"><a href="#" class="header-list-item-link">Faculties ratings</a></li>
+            <li class="header-list-item" style="margin-right: 75px;"><a href="" class="header-list-item-link"><spring:message code="enter.anchor1"/></a></li>
+            <li class="header-list-item"><a href="#" class="header-list-item-link"><spring:message code="enter.anchor2"/></a></li>
         </ul>
+        <select id="locales">
+            <option value="en">EN</option>
+            <option value="uk">UA</option>
+        </select>
     </header>
     <main class="main">
-        <h2 class="main-heading">Log In!</h2>
+        <h2 class="main-heading"><spring:message code="login.heading"/></h2>
         <form:form name="f" action="/login" class="main-form" method="post">
             <div class="main-form-block">
-                <label for="email" class="main-form-block-label">Email:</label>
-                <input name="email" type="email" id="email" class="main-form-block-input" placeholder="Enter your email">
+                <label for="email" class="main-form-block-label"><spring:message code="form.email-label"/></label>
+                <input name="email" type="email" id="email" class="main-form-block-input" placeholder="<spring:message code="form.email-input"/>">
             </div>
             <div class="main-form-block">
-                <label for="password" class="main-form-block-label">Password:</label>
+                <label for="password" class="main-form-block-label"><spring:message code="form.password-label"/></label>
                 <input name="password" type="password" id="password" class="main-form-block-input"
-                       placeholder="Enter your password">
+                       placeholder="<spring:message code="form.password-input"/>">
             </div>
             <div class="main-form-submit-block">
-                <input class="main-form-submit-block-button" type="submit" value="Log In">
+                <input class="main-form-submit-block-button" type="submit" value="<spring:message code="login.submit-button"/>">
                 <span class="main-form-submit-block-span">
-                        Don't have an account? <a href="/registration" class="main-form-submit-block-span-link">Sign Up</a>
+                        <spring:message code="login.dont-have-account"/> <a href="/registration" class="main-form-submit-block-span-link"><spring:message code="login.registration-link"/></a>
                 </span>
             </div>
             <span class="main-form-block-label" style="color: red;">${message}</span>

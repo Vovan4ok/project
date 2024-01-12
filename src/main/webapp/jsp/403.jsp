@@ -1,4 +1,8 @@
-<%@ page language="java" contentType="text/html; ISO-8859-1" pageEncoding="ISO-8859-1" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,6 +12,8 @@
     <title>Error</title>
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../styles/403.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/i18n.js"></script>
 </head>
 
 <body class="body">
@@ -15,17 +21,21 @@
     <header class="header">
         <div class="header-logo-block">
             <img src="../images/knu-logo.png" alt="knu logo" class="header-logo">
-            <h1 class="header-heading">Admission to KNU</h1>
+            <h1 class="header-heading"><spring:message code="enter.header-heading"/></h1>
         </div>
         <ul class="header-list">
-            <li class="header-list-item" style="margin-right: 75px;"><a href="#" class="header-list-item-link">All about admission</a></li>
-            <li class="header-list-item"><a href="#" class="header-list-item-link">Faculties ratings</a></li>
+            <li class="header-list-item" style="margin-right: 75px;"><a href="#" class="header-list-item-link"><spring:message code="enter.anchor1"/></a></li>
+            <li class="header-list-item"><a href="#" class="header-list-item-link"><spring:message code="enter.anchor2"/></a></li>
         </ul>
+        <select id="locales">
+            <option value="en">EN</option>
+            <option value="ua">UA</option>
+        </select>
     </header>
     <main class="main">
-        <h3 class="error-text">You have no permission to access page</h3>
+        <h3 class="error-text"><spring:message code="403.text" /></h3>
         <form class="main-form" action="/logout" method="post">
-            <input class="submit-button" type="submit" value="Sign in as different user"/>
+            <input class="submit-button" type="submit" value="<spring:message code="403.button" />"/>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
     </main>

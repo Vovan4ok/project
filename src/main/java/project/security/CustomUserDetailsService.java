@@ -26,7 +26,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         Optional<User> optionalUser = userRepository.findByEmail(email);
         if(optionalUser.isPresent()) {
             User user = optionalUser.get();
-            return new CustomUserDetails(user, Collections.singletonList(user.getRole()));
+            return new CustomUserDetails(user, Collections.singletonList(user.getRole().toString()));
         }
         throw new UsernameNotFoundException("No user present with such an email " + email);
     }

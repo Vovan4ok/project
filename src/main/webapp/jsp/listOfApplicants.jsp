@@ -12,6 +12,8 @@
     <title>List</title>
     <link rel="stylesheet" href="../styles/listOfApplicants.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
+    <script src="../js/i18n.js"></script>
 </head>
 
 <body class="body">
@@ -19,27 +21,31 @@
     <header class="header">
         <div class="header-logo-block">
             <img src="data:image/jpg;base64, ${user.encodedImage}" alt="knu logo" class="header-logo">
-            <h1 class="header-heading">Admission to KNU</h1>
+            <h1 class="header-heading"><spring:message code="user.header-heading"/></h1>
         </div>
         <ul class="header-list">
-            <li class="header-list-item" style="margin-right: 30px;"><a href="/home" class="header-list-item-link">Main</a></li>
-            <li class="header-list-item" style="margin-right: 30px;"><a href="/userFaculties" class="header-list-item-link">See info about faculties</a></li>
-            <li class="header-list-item"><a href="/application" class="header-list-item-link">Apply for admission</a></li>
+            <li class="header-list-item" style="margin-right: 30px;"><a href="/home" class="header-list-item-link"><spring:message code="user.anchor1"/></a></li>
+            <li class="header-list-item" style="margin-right: 30px; text-decoration: underline;"><a href="/userFaculties" class="header-list-item-link"><spring:message code="user.anchor2"/></a></li>
+            <li class="header-list-item"><a href="/application" class="header-list-item-link"><spring:message code="user.anchor3"/></a></li>
         </ul>
+        <select id="locales">
+            <option value="en">EN</option>
+            <option value="uk">UA</option>
+        </select>
     </header>
     <main class="main">
-        <h1 class="main-heading">${faculty.name} Faculty</h1>
+        <h1 class="main-heading">${faculty.name}</h1>
         <table class="main-table">
             <thead class="table-thead">
                 <tr class="table-row">
                     <th class="table-th">#</th>
-                    <th class="table-th">Name</th>
-                    <th class="table-th">Surname</th>
-                    <th class="table-th">Maths</th>
-                    <th class="table-th">English</th>
-                    <th class="table-th">Physics</th>
-                    <th class="table-th">Certificate</th>
-                    <th class="table-th">Rating</th>
+                    <th class="table-th"><spring:message code="listOfApplicants.table-name" /></th>
+                    <th class="table-th"><spring:message code="listOfApplicants.table-surname" /></th>
+                    <th class="table-th"><spring:message code="listOfApplicants.table-maths" /></th>
+                    <th class="table-th"><spring:message code="listOfApplicants.table-english" /></th>
+                    <th class="table-th"><spring:message code="listOfApplicants.table-physics" /></th>
+                    <th class="table-th"><spring:message code="listOfApplicants.table-certificate" /></th>
+                    <th class="table-th"><spring:message code="listOfApplicants.table-rating" /></th>
                 </tr>
             </thead>
             <tbody class="table-tbody">

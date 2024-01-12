@@ -68,6 +68,7 @@ public class UserController {
             model.addAttribute("error", "Your username or password is invalid");
         }
         if(logout != null) {
+            user = null;
             model.addAttribute("message", "You have been logged out");
         }
         logger.info("User is on the login page.");
@@ -81,8 +82,8 @@ public class UserController {
             this.user = userService.getUserByEmail(userPrincipal.getEmail());
         }
         request.getSession(true).setAttribute("user", user);
-        model.addAttribute("role", this.user.getRole());
-        if(this.user.getRole().equals("ADMIN")) {
+        model.addAttribute("role", this.user.getRole().toString());
+        if(this.user.getRole().toString().equals("ADMIN")) {
             List<Application> applications = applicationService.readAllByConfirmed(0);
             List<ApplicationModel> applicationModels = new ArrayList<>();
             for(Application application : applications) {

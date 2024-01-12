@@ -19,8 +19,8 @@ public class User {
     private String name;
     @Column(name="surname")
     private String surname;
-    @Column(name="role")
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     @Lob
     private byte[] image;
@@ -29,23 +29,6 @@ public class User {
     private String encodedImage;
 
     public User() {
-    }
-
-    public User(Integer id, String email, String password, String name, String surname, String role) {
-        this.id = id;
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.role = role;
-    }
-
-    public User(String email, String password, String name, String surname, String role) {
-        this.email = email;
-        this.password = password;
-        this.name = name;
-        this.surname = surname;
-        this.role = role;
     }
 
     public User(User user) {
@@ -97,11 +80,11 @@ public class User {
         this.surname = surname;
     }
 
-    public String getRole() {
+    public Role getRole() {
         return role;
     }
 
-    public void setRole(String role) {
+    public void setRole(Role role) {
         this.role = role;
     }
     public byte[] getImage() {
