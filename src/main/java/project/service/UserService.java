@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 public class UserService {
     @Autowired
     private final UserRepository userRepository;
+
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
@@ -50,5 +51,4 @@ public class UserService {
             throw new NullPointerException();
         }
     }
-
 }

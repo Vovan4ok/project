@@ -14,4 +14,5 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
     List<Application> readAllByFacultyIDAndConfirmedOrderByRatingMarkDesc(int facultyID, int confirmed);
 
     List<Application> readAllByConfirmed(Integer confirmed);
+
 }
