@@ -20,7 +20,6 @@ import static org.junit.Assert.*;
 @ComponentScan("project")
 @DataJpaTest
 public class UserServiceTests {
-
 	@Autowired
 	private UserRepository userRepository;
 

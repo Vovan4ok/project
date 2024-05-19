@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dao.ApplicationRepository;
 import project.domain.Application;
+import project.domain.Faculty;
 import project.domain.User;
 
 import java.util.List;
@@ -21,9 +22,9 @@ public class ApplicationService {
     }
 
     public void save(Application application, User user) {
-        application.setApplicantId(user.getId());
+        application.setApplicant(user);
         application.setRatingMark();
-        application.setConfirmed(0);
+        application.setConfirmed(false);
         logger.info("Save the application = " + application + " to DB.");
         applicationRepository.save(application);
     }
@@ -32,9 +33,9 @@ public class ApplicationService {
         logger.info("Get the application with id = " + id + " from DB.");
         return applicationRepository.findById(id).get();
     }
-    public List<Application> getApplicationsByFaculty(Integer facultyId, int confirmed) {
-        logger.info("Get all applications with facultyId = " + facultyId + " from DB.");
-        return applicationRepository.readAllByFacultyIDAndConfirmedOrderByRatingMarkDesc(facultyId, confirmed);
+    public List<Application> getApplicationsByFacultyAndConfirmed(Faculty faculty, Boolean confirmed) {
+        logger.info("Get all applications with facultyId = " + faculty + " from DB.");
+        return applicationRepository.readAllByFacultyAndConfirmedOrderByRatingMarkDesc(faculty, confirmed);
     }
 
     public void update(Application application) {
@@ -42,8 +43,13 @@ public class ApplicationService {
         applicationRepository.saveAndFlush(application);
     }
 
-    public List<Application> readAllByConfirmed(Integer confirmed) {
+    public List<Application> readAllByConfirmed(Boolean confirmed) {
         logger.info("Get all applications with confirmed = " + confirmed + " from DB.");
         return applicationRepository.readAllByConfirmed(confirmed);
+    }
+
+    public void delete(Application application) {
+        logger.info("Delete application = " + application + " from DB.");
+        applicationRepository.delete(application);
     }
 }

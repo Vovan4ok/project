@@ -6,22 +6,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import project.domain.Application;
-import project.domain.ApplicationModel;
 import project.domain.Faculty;
 import project.domain.User;
-import project.service.ApplicationModelDTOHelper;
+import project.service.ApplicationDTO;
 import project.service.ApplicationService;
 import project.service.FacultyService;
 import project.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ApplicationController {
@@ -36,54 +34,62 @@ public class ApplicationController {
 
     Logger logger = LoggerFactory.getLogger(ApplicationController.class);
 
-    @RequestMapping(value="/application", method = RequestMethod.GET)
-    public String application(Model model, HttpServletRequest request) {
+    @GetMapping(value="/application")
+    public String application(HttpServletRequest request) {
         logger.info("The user is on the application page.");
         request.setAttribute("user", (User) request.getSession().getAttribute("user"));
-        model.addAttribute("faculties", facultyService.readAll());
-        model.addAttribute("applicationForm", new Application());
+        request.setAttribute("faculties", facultyService.readAll());
         return "application";
     }
 
-    @RequestMapping(value = "/application", method = RequestMethod.POST)
-    public String application(@ModelAttribute("applicationForm") Application applicationForm, BindingResult bindingResult, @RequestParam("facultyId") Integer facultyId, HttpServletRequest request){
+    @PostMapping(value = "/application")
+    public String application(@ModelAttribute("applicationForm") Application applicationForm, BindingResult bindingResult, @RequestParam("facultyId") Short facultyId, HttpServletRequest request){
         logger.info("User is trying to apply.");
         if(bindingResult.hasErrors()) {
             logger.info("The application wasn't successful.");
-            return "aplication";
+            return "application";
         }
         User user = (User) request.getSession().getAttribute("user");
-        applicationForm.setFacultyID(facultyId);
+        applicationForm.setFaculty(facultyService.readById(facultyId));
         user = userService.getUserByEmail(user.getEmail());
         applicationService.save(applicationForm, user);
         logger.info("User made an application");
         return "redirect:/home";
     }
 
-    @RequestMapping(value = "/listOfApplicants", method = RequestMethod.GET)
-    public String listOfApplicants(@RequestParam("id") Integer id, Model model, HttpServletRequest request) {
-        logger.info("User wants to see the list of applicants to the faculty with id = "  + id + ".");
-        List<Application> applications = applicationService.getApplicationsByFaculty(id, 1);
-        List<ApplicationModel> applicationModels = new ArrayList<>();
+    @GetMapping(value = "/list-of-applicants/{faculty_id}")
+    public String listOfApplicants(@PathVariable Short faculty_id, HttpServletRequest request) {
+        Faculty faculty = facultyService.readById(faculty_id);
+        logger.info("User wants to see the list of applicants to the faculty = "  + faculty + ".");
+        List<Application> applications = applicationService.getApplicationsByFacultyAndConfirmed(faculty, true);
+        List<ApplicationDTO> applicationDTOS = new ArrayList<>();
         int place = 1;
         for(Application application : applications) {
-            User applicant = userService.findById(application.getApplicantId());
-
-            applicationModels.add(ApplicationModelDTOHelper.createEntityForUser(
-                    place,
-                    applicant.getName(),
-                    applicant.getSurname(),
-                    application.getMathsMark(),
-                    application.getEnglishMark(),
-                    application.getPhysicsMark(),
-                    application.getCertificateMark(),
-                    application.getRatingMark()
-            ));
+            applicationDTOS.add(new ApplicationDTO(application, place));
             place++;
         }
         request.setAttribute("user", (User) request.getSession().getAttribute("user"));
-        model.addAttribute("applications", applicationModels);
-        model.addAttribute("faculty", facultyService.readById(id));
-        return "listOfApplicants";
+        request.setAttribute("applicationDTOS", applicationDTOS);
+        request.setAttribute("faculty", faculty);
+        return "list-of-applicants";
+    }
+
+    @GetMapping(value = "/acceptApplication")
+    public String acceptApplication(@RequestParam("id") Integer id) {
+        logger.info("Admin is confirming the application with the id = " + id + ".");
+        Application application = applicationService.findById(id);
+        application.setConfirmed(true);
+        applicationService.update(application);
+        logger.info("The confirmation is successful.");
+        return "redirect:/home";
+    }
+
+    @GetMapping(value = "/deleteApplication")
+    public String deleteApplication(@RequestParam("id") Integer id) {
+        logger.info("Admin is declining the application with the id = " + id + ".");
+        Application application = applicationService.findById(id);
+        applicationService.delete(application);
+        logger.info("Application was deleted.");
+        return "redirect:/home";
     }
 }

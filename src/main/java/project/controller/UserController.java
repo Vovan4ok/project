@@ -6,20 +6,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.domain.Application;
-import project.domain.ApplicationModel;
 import project.domain.Faculty;
 import project.domain.User;
 import project.service.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,84 +34,65 @@ public class UserController {
     private User user;
     Logger logger = LoggerFactory.getLogger(UserController.class);
 
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Model model) {
+    @GetMapping(value = "/registration")
+    public String registration() {
         logger.info("The user is on the registration page.");
         return "registration";
     }
 
-    @RequestMapping(value="/registration", method = RequestMethod.POST)
+    @PostMapping(value="/registration")
     public String registration(
             @RequestParam("name") String name,
             @RequestParam("surname") String surname,
             @RequestParam("email") String email,
             @RequestParam("password") String password,
             @RequestParam("imageFile") MultipartFile image,
-            Model model) throws IOException {
+            HttpServletRequest request) throws IOException {
         logger.info("User is trying to register");
-        User userForm = UserDTOHelper.createUser(name, surname, email, password, image);
+        User userForm = UserDTOHelper.createUser(name, surname, email, password, image.getOriginalFilename());
         if(userService.save(userForm)) {
             user = userService.getUserByEmail(userForm.getEmail());
+            saveImage(image);
             logger.info("Redirecting to the home page.");
             return "redirect:/home";
         }
-        model.addAttribute("msg", "This email already exists!");
+        request.setAttribute("msg", "This email already exists!");
         logger.info("Registration wasn't successful.");
         return "registration";
     }
 
-    @RequestMapping(value={"/", "login"}, method=RequestMethod.GET)
-    public String login(Model model, String error, String logout) {
+    @GetMapping(value={"/", "login"})
+    public String login(String error, String logout, HttpServletRequest request) {
         if(error != null) {
-            model.addAttribute("error", "Your username or password is invalid");
+            request.setAttribute("error", "Your username or password is invalid");
         }
         if(logout != null) {
             user = null;
-            model.addAttribute("message", "You have been logged out");
+            request.setAttribute("message", "You have been logged out");
         }
         logger.info("User is on the login page.");
         return "login";
     }
 
-    @RequestMapping(value = "/home", method = RequestMethod.GET)
-    public String home(Model model, @AuthenticationPrincipal User userPrincipal, HttpServletRequest request) {
+    @GetMapping(value = "/home")
+    public String home(@AuthenticationPrincipal User userPrincipal, HttpServletRequest request) {
         logger.info("User is on the home page.");
         if(this.user == null) {
             this.user = userService.getUserByEmail(userPrincipal.getEmail());
         }
         request.getSession(true).setAttribute("user", user);
-        model.addAttribute("role", this.user.getRole().toString());
+        request.setAttribute("role", this.user.getRole().toString());
         if(this.user.getRole().toString().equals("ROLE_ADMIN")) {
-            List<Application> applications = applicationService.readAllByConfirmed(0);
-            List<ApplicationModel> applicationModels = new ArrayList<>();
-            for(Application application : applications) {
-                User applicant = userService.findById(application.getApplicantId());
-                Faculty faculty = facultyService.readById(application.getFacultyID());
-
-                applicationModels.add(ApplicationModelDTOHelper.createEntityForAdmin(
-                        application.getId(),
-                        applicant.getName(),
-                        applicant.getSurname(),
-                        application.getMathsMark(),
-                        application.getEnglishMark(),
-                        application.getPhysicsMark(),
-                        application.getCertificateMark(),
-                        application.getRatingMark(),
-                        faculty.getName()
-                ));
-            }
-            model.addAttribute("applications", applicationModels);
+            List<Application> applications = applicationService.readAllByConfirmed(false);
+            request.setAttribute("applications", applications);
         }
         return "home";
     }
 
-    @RequestMapping(value = "/acceptApplication", method = RequestMethod.GET)
-    public String acceptApplication(@RequestParam("id") Integer id, Model model) {
-        logger.info("Admin is confirming the application with the id = " + id + ".");
-        Application application = applicationService.findById(id);
-        application.setConfirmed(1);
-        applicationService.update(application);
-        logger.info("The confirmation is successful.");
-        return "redirect:/home";
+    public void saveImage(MultipartFile file) throws IOException {
+        String folder = "src/main/webapp/images/avatars/";
+        byte[] bytes = file.getBytes();
+        Path path = Paths.get(folder + file.getOriginalFilename());
+        Files.write(path, bytes);
     }
 }

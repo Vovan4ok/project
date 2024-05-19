@@ -8,8 +8,12 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.dao.ApplicationRepository;
 import project.domain.Application;
+import project.domain.Faculty;
+import project.domain.Role;
 import project.domain.User;
 import project.service.ApplicationService;
+import project.service.FacultyService;
+import project.service.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,26 +25,30 @@ import static org.junit.Assert.*;
 @ComponentScan("project")
 @DataJpaTest
 public class ApplicationServiceTests {
-
     @Autowired
     private ApplicationService applicationService;
 
     @Autowired
     private ApplicationRepository applicationRepository;
 
+    @Autowired
+    private FacultyService facultyService;
+
+    @Autowired
+    private UserService userService;
+
     @Test
     public void testSave() {
-        User user = new User();
-        user.setId(0);
-
         List<Application> applications = applicationRepository.findAll();
         assertThat(applications, hasSize(0));
 
-        int i = 1;
         for(Application application : getTestData()) {
-            user.setId(i);
+            userService.save(application.getApplicant());
+            facultyService.save(application.getFaculty());
+            Faculty faculty = facultyService.getFacultyByName(application.getFaculty().getName());
+            application.setFaculty(faculty);
+            User user = userService.getUserByEmail(application.getApplicant().getEmail());
             applicationService.save(application, user);
-            i++;
         }
 
         applications = applicationRepository.findAll();
@@ -49,17 +57,16 @@ public class ApplicationServiceTests {
 
     @Test
     public void testFindById() {
-        User user = new User();
-        user.setId(0);
-
         List<Application> applications = applicationRepository.findAll();
         assertThat(applications, hasSize(0));
 
-        int i = 1;
         for(Application application : getTestData()) {
-            user.setId(i);
+            userService.save(application.getApplicant());
+            facultyService.save(application.getFaculty());
+            Faculty faculty = facultyService.getFacultyByName(application.getFaculty().getName());
+            application.setFaculty(faculty);
+            User user = userService.getUserByEmail(application.getApplicant().getEmail());
             applicationService.save(application, user);
-            i++;
         }
 
         applications = applicationRepository.findAll();
@@ -70,86 +77,86 @@ public class ApplicationServiceTests {
 
     @Test
     public void testGetApplicationsByFaculty() {
-        User user = new User();
-        user.setId(0);
-
         List<Application> applications = applicationRepository.findAll();
         assertThat(applications, hasSize(0));
 
-        int i = 1;
         for(Application application : getTestData()) {
-            user.setId(i);
+            userService.save(application.getApplicant());
+            facultyService.save(application.getFaculty());
+            Faculty faculty = facultyService.getFacultyByName(application.getFaculty().getName());
+            application.setFaculty(faculty);
+            User user = userService.getUserByEmail(application.getApplicant().getEmail());
             applicationService.save(application, user);
-            i++;
         }
 
         applications = applicationRepository.findAll();
         assertThat(applications, hasSize(10));
 
-        applications = applicationService.getApplicationsByFaculty(1, 0);
+        applications = applicationService.getApplicationsByFacultyAndConfirmed(facultyService.getFacultyByName("FIT"), false);
         assertThat(applications, hasSize(2));
     }
 
     @Test
     public void testUpdate() {
-        User user = new User();
-        user.setId(0);
+        User user = new User(0, "vova", "vova", "vova", "vova", Role.ROLE_USER, "vova");
+        facultyService.save(new Faculty((short) 1, "FIT", (short) 100));
 
         List<Application> applications = applicationRepository.findAll();
         assertThat(applications, hasSize(0));
 
-        applicationService.save(new Application(0, 150, 150, 150, 11, 1), user);
+        userService.save(user);
+        user = userService.getUserByEmail(user.getEmail());
+        applicationService.save(new Application(user, (short) 150, (short) 150, (short) 150, 11F, facultyService.getFacultyByName("FIT")), user);
 
         applications = applicationRepository.findAll();
         assertThat(applications, hasSize(1));
 
-        applications.get(0).setConfirmed(1);
+        applications.get(0).setConfirmed(true);
         applicationService.update(applications.get(0));
 
-        assertNotEquals(applicationRepository.findAll().get(0).getConfirmed(), 0);
+        assertNotEquals(applicationRepository.findAll().get(0).getConfirmed(), false);
     }
 
     @Test
     public void testReadAllByConfirmed() {
-        User user = new User();
-        user.setId(0);
-
         List<Application> applications = applicationRepository.findAll();
         assertThat(applications, hasSize(0));
 
-        int i = 1;
         for(Application application : getTestData()) {
-            user.setId(i);
+            userService.save(application.getApplicant());
+            facultyService.save(application.getFaculty());
+            Faculty faculty = facultyService.getFacultyByName(application.getFaculty().getName());
+            application.setFaculty(faculty);
+            User user = userService.getUserByEmail(application.getApplicant().getEmail());
             applicationService.save(application, user);
-            i++;
         }
 
         applications = applicationRepository.findAll();
         assertThat(applications, hasSize(10));
 
-        applications.get(5).setConfirmed(1);
+        applications.get(5).setConfirmed(true);
         applicationService.update(applications.get(5));
-        applications.get(7).setConfirmed(1);
+        applications.get(7).setConfirmed(true);
         applicationService.update(applications.get(7));
 
 
-        applications = applicationService.readAllByConfirmed(1);
+        applications = applicationService.readAllByConfirmed(true);
         assertThat(applications, hasSize(2));
     }
 
     private List<Application> getTestData() {
         List<Application> applications = new ArrayList<>();
 
-        Application application = new Application(1, 150, 160, 180, 11, 3);
-        Application application2 = new Application(2, 140, 120, 170, 12, 5);
-        Application application3 = new Application(3, 160, 130, 130, 11, 8);
-        Application application4 = new Application(4, 180, 140, 140, 12, 1);
-        Application application5 = new Application(5, 110, 150, 190, 8, 4);
-        Application application6 = new Application(6, 120, 160, 150, 6, 8);
-        Application application7 = new Application(7, 140, 170, 180, 7, 2);
-        Application application8 = new Application(8, 150, 180, 160, 9, 4);
-        Application application9 = new Application(9, 180, 190, 170, 10, 1);
-        Application application10 = new Application(10, 190, 190, 180, 5, 0);
+        Application application = new Application(new User(1, "vova", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 150, (short) 160, (short) 180, 11F, new Faculty((short) 3, "monitor", (short) 50));
+        Application application2 = new Application(new User(1, "maks", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 140, (short) 120, (short) 170, 12F, new Faculty((short) 5, "wow", (short) 50));
+        Application application3 = new Application(new User(1, "ivan", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 160, (short) 130, (short) 130, 11F, new Faculty((short) 8, "hi", (short) 50));
+        Application application4 = new Application(new User(1, "vasyl", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 180, (short) 140, (short) 140, 12F, new Faculty((short) 1, "FIT", (short) 50));
+        Application application5 = new Application(new User(1, "artem", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 110, (short) 150, (short) 190, 8F, new Faculty((short) 4, "hello", (short) 50));
+        Application application6 = new Application(new User(1, "igor", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 120, (short) 160, (short) 150, 6F, new Faculty((short) 8, "hi", (short) 50));
+        Application application7 = new Application(new User(1, "vlad", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 140, (short) 170, (short) 180, 7F, new Faculty((short) 2, "Good", (short) 50));
+        Application application8 = new Application(new User(1, "sasha", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 150, (short) 180, (short) 160, 9F, new Faculty((short) 4, "hello", (short) 50));
+        Application application9 = new Application(new User(1, "nikita", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 180, (short) 190, (short) 170, 10F, new Faculty((short) 1, "FIT", (short) 50));
+        Application application10 = new Application(new User(1, "alex", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 190, (short) 190, (short) 180, 5F, new Faculty((short) 0, "world", (short) 50));
 
         applications.add(application);
         applications.add(application2);

@@ -35,3 +35,15 @@
     font-family: 'Itim';
     font-size: 25px;
 }
+.header-logout-form-button{
+    width: fit-content;
+    height: fit-content;
+    background-color: white;
+    border: none;
+}
+.header-logout-form-button:hover{
+    cursor: pointer;
+}
+.header-icon{
+    font-size: 20px;
+}

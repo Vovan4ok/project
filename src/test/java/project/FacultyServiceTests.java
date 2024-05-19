@@ -10,6 +10,7 @@ import project.domain.Faculty;
 import project.service.FacultyService;
 
 import java.util.List;
+import java.util.Optional;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.junit.Assert.*;
@@ -60,14 +61,14 @@ public class FacultyServiceTests {
 
         faculty = facultyService.readAll().get(0);
         faculty.setName("test1");
-        faculty.setPlanNumber(200);
+        faculty.setPlanNumber((short) 200);
 
         facultyService.update(faculty);
 
         faculty = facultyService.readAll().get(0);
 
         assertNotEquals(faculty.getName(), "test");
-        assertNotEquals(faculty.getPlanNumber(), 100);
+        assertNotEquals(faculty.getPlanNumber(), Short.valueOf((short) 100));
     }
 
     @Test
@@ -80,14 +81,13 @@ public class FacultyServiceTests {
         faculties = facultyService.readAll();
         assertThat(faculties, hasSize(1));
 
-        facultyService.delete(facultyService.readAll().get(0).getId());
+        facultyService.delete(facultyService.readAll().get(0));
 
         faculties = facultyService.readAll();
         assertThat(faculties, hasSize(0));
     }
 
     private Faculty getTestFaculty() {
-        return new Faculty("test", 100);
-
+        return new Faculty("test", (short) 100);
     }
 }

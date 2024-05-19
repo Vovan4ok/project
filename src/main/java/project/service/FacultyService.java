@@ -1,11 +1,14 @@
 package project.service;
 
+import lombok.NoArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import project.dao.FacultyRepository;
 import project.domain.Faculty;
+import project.domain.User;
 
 import java.util.List;
 
@@ -30,7 +33,7 @@ public class FacultyService {
         return false;
     }
 
-    public Faculty readById(Integer id) {
+    public Faculty readById(Short id) {
         logger.info("Get the faculty with id = " + id + " from DB.");
         return facultyRepository.findById(id).get();
     }
@@ -45,8 +48,19 @@ public class FacultyService {
         facultyRepository.saveAndFlush(faculty);
     }
 
-    public void delete(Integer id) {
-        logger.info("Delete the faculty with id = " + id + " from DB.");
-        facultyRepository.delete(facultyRepository.findById(id).get());
+    public void delete(Faculty faculty) {
+        logger.info("Delete the faculty = " + faculty + " from DB.");
+        facultyRepository.delete(faculty);
+    }
+
+    public Faculty getFacultyByName(String name) {
+        if (facultyRepository.existsByName(name)) {
+            logger.info("Get the faculty with name = " + name + " from DB.");
+            return facultyRepository.findByName(name).get();
+        }
+        else {
+            logger.info("The faculty with name + " + name + " doesn't exist.");
+            throw new NullPointerException();
+        }
     }
 }
