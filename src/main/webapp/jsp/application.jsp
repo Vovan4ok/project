@@ -45,19 +45,19 @@
         <form:form action="application" class="main-form" method="post">
             <div class="main-form-block">
                 <label for="mathsMark" class="main-form-block-label"><spring:message code="form.maths-label"/></label>
-                <input name="mathsMark" required id="mathsMark" type="number" class="main-form-block-input" placeholder="<spring:message code="form.maths-input"/>">
+                <input name="mathsMark" required id="mathsMark" type="number" class="main-form-block-input" placeholder="<spring:message code="form.maths-input"/>" min="100" max="200">
             </div>
             <div class="main-form-block">
                 <label for="englishMark" class="main-form-block-label"><spring:message code="form.english-label"/></label>
-                <input name="englishMark" required id="englishMark" type="number" class="main-form-block-input" placeholder="<spring:message code="form.english-input"/>">
+                <input name="englishMark" required id="englishMark" type="number" class="main-form-block-input" placeholder="<spring:message code="form.english-input"/>" min="100" max="200">
             </div>
             <div class="main-form-block">
                 <label for="physicsMark" class="main-form-block-label"><spring:message code="form.physics-label"/></label>
-                <input name="physicsMark" required id="physicsMark" type="number" class="main-form-block-input" placeholder="<spring:message code="form.physics-input"/>">
+                <input name="physicsMark" required id="physicsMark" type="number" class="main-form-block-input" placeholder="<spring:message code="form.physics-input"/>" min="100" max="200">
             </div>
             <div class="main-form-block">
                 <label for="certificateMark" class="main-form-block-label"><spring:message code="form.certificate-label"/></label>
-                <input name="certificateMark" required id="certificateMark" type="number" class="main-form-block-input" placeholder="<spring:message code="form.certificate-input"/>">
+                <input name="certificateMark" step="0.1" required id="certificateMark" type="number" class="main-form-block-input" placeholder="<spring:message code="form.certificate-input"/>" min="0" max="12">
             </div>
             <div class="main-form-block">
                 <label for="facultyId" class="main-form-block-label"><spring:message code="form.faculty-label"/></label>
@@ -67,7 +67,12 @@
                     </c:forEach>
                 </select>
             </div>
-            <input class="main-form-submit-button" type="submit" value="<spring:message code="application.button"/>">
+            <div class="main-form-submit-block">
+                <input class="main-form-submit-block-button" type="submit" value="<spring:message code="application.button"/>">
+                <span class="main-form-submit-block-span">
+                        <a href="/application-history" class="main-form-submit-block-span-link"><spring:message code="application.history"/> </a>
+                </span>
+            </div>
         </form:form>
     </main>
     <jsp:include page="footer.jsp"></jsp:include>

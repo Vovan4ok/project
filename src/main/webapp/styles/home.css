@@ -1,26 +1,8 @@
 @import url("reset.css");
 @import url("header.css");
 @import url("footer.css");
+@import url("main.css");
 
-.body{
-    width: 100%;
-    padding: 68px 85px;
-    background-color: #EDEBEB;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.container{
-    background-color: #FFFFFF;
-    width: 1350px;
-    min-height: 600px;
-    border-radius: 50px;
-    padding: 25px 83px;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: space-between;
-}
 .user-main{
     width: 100%;
     height: fit-content;
@@ -44,7 +26,8 @@
 }
 .main{
     width: 100%;
-    height: fit-content;
+    min-height: 390px;
+    margin: 40px 0;
 }
 .main-heading{
     width: fit-content;

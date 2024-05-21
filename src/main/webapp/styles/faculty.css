@@ -1,0 +1,49 @@
+@import url("reset.css");
+@import url("header.css");
+@import url("footer.css");
+@import url("main.css");
+
+.main{
+    width: 100%;
+    min-height: 390px;
+    margin: 40px 0;
+}
+.faculty-block {
+    width: 80%;
+    padding: 40px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: 2px solid #DCFDFF;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.faculty-block h1 {
+    font-family: 'Itim';
+    font-size: 36px;
+    color: black;
+    margin-bottom: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+.faculty-block p,
+.faculty-block a {
+    font-family: 'Itim';
+    font-size: 20px;
+    color: black;
+    margin: 10px 0;
+    text-align: left;
+}
+
+.faculty-block a {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.faculty-block a:hover {
+    text-decoration: underline;
+}

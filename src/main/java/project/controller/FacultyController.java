@@ -22,6 +22,18 @@ public class FacultyController {
 
     Logger logger = LoggerFactory.getLogger(FacultyController.class);
 
+    @GetMapping(value="/faculties")
+    public String faculties(HttpServletRequest request) {
+        request.setAttribute("faculties", facultyService.readAll());
+        return "faculties";
+    }
+
+    @GetMapping(value="/faculty")
+    public String faculty(@RequestParam Short id, HttpServletRequest request) {
+        request.setAttribute("faculty", facultyService.readById(id));
+        return "faculty";
+    }
+
     @GetMapping(value = "/addFaculty")
     public String addFaculty(HttpServletRequest request) {
         logger.info("Admin is on the addFaculty page.");

@@ -45,12 +45,44 @@
         <form:form action="addFaculty" class="main-form" method="post">
             <div class="main-form-block">
                 <span class="main-form-block-label" style="color: red;">${msg}</span>
-                <label for="name" class="main-form-block-label"><spring:message code="form.name-label" /></label>
+                <label for="name" class="main-form-block-label"><spring:message code="form.faculty-name-label" /></label>
                 <input name="name" id="name" type="text" required class="main-form-block-input" placeholder="<spring:message code="form.faculty-name-input" />">
             </div>
             <div class="main-form-block">
                 <label for="planNumber" class="main-form-block-label"><spring:message code="form.faculty-plan-number-label" /></label>
-                <input name="planNumber" id="planNumber" type="number" class="main-form-block-input" placeholder="<spring:message code="form.faculty-plan-number-input" />">
+                <input name="planNumber" id="planNumber" required type="number" class="main-form-block-input" placeholder="<spring:message code="form.faculty-plan-number-input" />" min="0" max="32767">
+            </div>
+            <div class="main-form-block">
+                <label for="headOfFaculty" class="main-form-block-label"><spring:message code="form.faculty-head-of-faculty-label" /></label>
+                <input name="headOfFaculty" id="headOfFaculty" required type="text" class="main-form-block-input" placeholder="<spring:message code="form.faculty-head-of-faculty-input" />">
+            </div>
+            <div class="main-form-block">
+                <label for="establishedYear" class="main-form-block-label"><spring:message code="form.faculty-established-year-label" /></label>
+                <input name="establishedYear" id="establishedYear" required type="number" class="main-form-block-input" placeholder="<spring:message code="form.faculty-established-year-input" />" min="0" max="32767">
+            </div>
+            <div class="main-form-block">
+                <label for="numberOfStudents" class="main-form-block-label"><spring:message code="form.faculty-number-of-students-label" /></label>
+                <input name="numberOfStudents" id="numberOfStudents" required type="number" class="main-form-block-input" placeholder="<spring:message code="form.faculty-number-of-students-input" />" min="0" max="32767">
+            </div>
+            <div class="main-form-block">
+                <label for="address" style="align-self: start;" class="main-form-block-label"><spring:message code="form.faculty-address-label" /></label>
+                <textarea name="address" id="address" required class="main-form-block-input" style="height: 65px;" placeholder="<spring:message code="form.faculty-address-input" />"></textarea>
+            </div>
+            <div class="main-form-block">
+                <label for="websiteUrl" class="main-form-block-label"><spring:message code="form.faculty-website-url-label" /></label>
+                <input name="websiteUrl" id="websiteUrl" required type="text" class="main-form-block-input" placeholder="<spring:message code="form.faculty-website-url-input" />">
+            </div>
+            <div class="main-form-block">
+                <label for="email" class="main-form-block-label"><spring:message code="form.faculty-email-label" /></label>
+                <input name="email" id="email" type="email" required class="main-form-block-input" placeholder="<spring:message code="form.faculty-email-input" />">
+            </div>
+            <div class="main-form-block">
+                <label for="phone" class="main-form-block-label"><spring:message code="form.faculty-phone-label" /></label>
+                <input name="phone" id="phone" type="text" required class="main-form-block-input" placeholder="<spring:message code="form.faculty-phone-input" />">
+            </div>
+            <div class="main-form-block">
+                <label for="description" style="align-self: start;" class="main-form-block-label"><spring:message code="form.faculty-description-label" /></label>
+                <textarea name="description" id="description" required class="main-form-block-input" style="height: 200px;" placeholder="<spring:message code="form.faculty-description-input" />"></textarea>
             </div>
             <input class="main-form-submit-block-button" required type="submit" value="<spring:message code="addFaculty.button" />">
         </form:form>

@@ -41,8 +41,9 @@ public class Application {
     @ManyToOne
     @JoinColumn(name="faculty_id")
     private Faculty faculty;
-    @Column(name="confirmed")
-    private Boolean confirmed;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
     public Application(User applicant, Short mathsMark, Short englishMark, Short physicsMark, Float certificateMark, Faculty faculty) {
         this.applicant = applicant;
@@ -52,7 +53,7 @@ public class Application {
         this.certificateMark = certificateMark;
         this.ratingMark = (mathsMark + englishMark + physicsMark + (certificateMark / 12 * 200)) / 4;
         this.faculty = faculty;
-        this.confirmed = false;
+        this.status = Status.UNKNOWN;
     }
 
     public void setRatingMark() {

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.domain.Application;
 import project.domain.Faculty;
+import project.domain.Status;
 import project.domain.User;
 import project.service.*;
 
@@ -25,9 +26,6 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
-
-    @Autowired
-    private FacultyService facultyService;
 
     @Autowired
     private ApplicationService applicationService;
@@ -83,7 +81,7 @@ public class UserController {
         request.getSession(true).setAttribute("user", user);
         request.setAttribute("role", this.user.getRole().toString());
         if(this.user.getRole().toString().equals("ROLE_ADMIN")) {
-            List<Application> applications = applicationService.readAllByConfirmed(false);
+            List<Application> applications = applicationService.readAllByStatus(Status.UNKNOWN);
             request.setAttribute("applications", applications);
         }
         return "home";

@@ -1,0 +1,64 @@
+@import url("reset.css");
+@import url("header.css");
+@import url("footer.css");
+@import url("main.css");
+
+.main{
+    width: 100%;
+    display: flex;
+    margin: 40px 0;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+.faculty-block{
+    width: 30%;
+    height: 250px;
+    padding: 20px;
+    display: flex;
+    flex-flow: column nowrap;
+    justify-content: space-around;
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border: 2px solid #DCFDFF;
+    margin-bottom: 20px;
+}
+.faculty-block-header{
+    font-family: 'Itim';
+    font-size: 25px;
+    color: black;
+    align-self: center;
+}
+.faculty-block-text{
+    font-family: 'Itim';
+    font-size: 20px;
+    color: black;
+}
+.website-link{
+    color: #007bff;
+    text-decoration: none;
+}
+.website-link:hover{
+    text-decoration: underline;
+}
+.faculty-block-details{
+    display: block;
+    width: 50%;
+    height: 40px;
+    border-radius: 10px;
+    color: black;
+    font-family: 'Itim';
+    font-size: 20px;
+    text-decoration: none;
+    background-color: #DCFDFF;
+    border: none;
+    transition: 0.5s background-color;
+    align-self: center;
+    align-content: center;
+    text-align: center;
+}
+.faculty-block-details:hover{
+    background-color: rgb(8, 8, 135);
+    color: white;
+    cursor: pointer;
+}

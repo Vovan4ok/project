@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import project.dao.ApplicationRepository;
 import project.domain.Application;
 import project.domain.Faculty;
+import project.domain.Status;
 import project.domain.User;
 
 import java.util.List;
@@ -24,7 +25,7 @@ public class ApplicationService {
     public void save(Application application, User user) {
         application.setApplicant(user);
         application.setRatingMark();
-        application.setConfirmed(false);
+        application.setStatus(Status.UNKNOWN);
         logger.info("Save the application = " + application + " to DB.");
         applicationRepository.save(application);
     }
@@ -33,9 +34,9 @@ public class ApplicationService {
         logger.info("Get the application with id = " + id + " from DB.");
         return applicationRepository.findById(id).get();
     }
-    public List<Application> getApplicationsByFacultyAndConfirmed(Faculty faculty, Boolean confirmed) {
+    public List<Application> getApplicationsByFacultyAndStatus(Faculty faculty, Status status) {
         logger.info("Get all applications with facultyId = " + faculty + " from DB.");
-        return applicationRepository.readAllByFacultyAndConfirmedOrderByRatingMarkDesc(faculty, confirmed);
+        return applicationRepository.readAllByFacultyAndStatusOrderByRatingMarkDesc(faculty, status);
     }
 
     public void update(Application application) {
@@ -43,13 +44,18 @@ public class ApplicationService {
         applicationRepository.saveAndFlush(application);
     }
 
-    public List<Application> readAllByConfirmed(Boolean confirmed) {
-        logger.info("Get all applications with confirmed = " + confirmed + " from DB.");
-        return applicationRepository.readAllByConfirmed(confirmed);
+    public List<Application> readAllByStatus(Status status) {
+        logger.info("Get all applications with confirmed = " + status + " from DB.");
+        return applicationRepository.readAllByStatus(status);
     }
 
     public void delete(Application application) {
         logger.info("Delete application = " + application + " from DB.");
         applicationRepository.delete(application);
+    }
+
+    public List<Application> readAllByApplicant(User user) {
+        logger.info("Get all applications by user = " + user + " from DB.");
+        return applicationRepository.readAllByApplicant(user);
     }
 }

@@ -19,14 +19,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
     private Integer id;
+
     @Column(name="email", unique = true)
     private String email;
+
     @Column(name="password")
     private String password;
+
     @Column(name="name")
     private String name;
+
     @Column(name="surname")
     private String surname;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 

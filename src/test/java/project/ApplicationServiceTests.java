@@ -7,10 +7,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
 import project.dao.ApplicationRepository;
-import project.domain.Application;
-import project.domain.Faculty;
-import project.domain.Role;
-import project.domain.User;
+import project.domain.*;
 import project.service.ApplicationService;
 import project.service.FacultyService;
 import project.service.UserService;
@@ -92,14 +89,14 @@ public class ApplicationServiceTests {
         applications = applicationRepository.findAll();
         assertThat(applications, hasSize(10));
 
-        applications = applicationService.getApplicationsByFacultyAndConfirmed(facultyService.getFacultyByName("FIT"), false);
+        applications = applicationService.getApplicationsByFacultyAndStatus(facultyService.getFacultyByName("FIT"), Status.UNKNOWN);
         assertThat(applications, hasSize(2));
     }
 
     @Test
     public void testUpdate() {
         User user = new User(0, "vova", "vova", "vova", "vova", Role.ROLE_USER, "vova");
-        facultyService.save(new Faculty((short) 1, "FIT", (short) 100));
+        facultyService.save(new Faculty((short) 1, "FIT", (short) 100, "random", 2005, 2000, "random", "random", "random", "random", "random"));
 
         List<Application> applications = applicationRepository.findAll();
         assertThat(applications, hasSize(0));
@@ -111,10 +108,10 @@ public class ApplicationServiceTests {
         applications = applicationRepository.findAll();
         assertThat(applications, hasSize(1));
 
-        applications.get(0).setConfirmed(true);
+        applications.get(0).setStatus(Status.ACCEPTED);
         applicationService.update(applications.get(0));
 
-        assertNotEquals(applicationRepository.findAll().get(0).getConfirmed(), false);
+        assertNotEquals(applicationRepository.findAll().get(0).getStatus(), Status.DECLINED);
     }
 
     @Test
@@ -134,29 +131,29 @@ public class ApplicationServiceTests {
         applications = applicationRepository.findAll();
         assertThat(applications, hasSize(10));
 
-        applications.get(5).setConfirmed(true);
+        applications.get(5).setStatus(Status.ACCEPTED);
         applicationService.update(applications.get(5));
-        applications.get(7).setConfirmed(true);
+        applications.get(7).setStatus(Status.ACCEPTED);
         applicationService.update(applications.get(7));
 
 
-        applications = applicationService.readAllByConfirmed(true);
+        applications = applicationService.readAllByStatus(Status.ACCEPTED);
         assertThat(applications, hasSize(2));
     }
 
     private List<Application> getTestData() {
         List<Application> applications = new ArrayList<>();
 
-        Application application = new Application(new User(1, "vova", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 150, (short) 160, (short) 180, 11F, new Faculty((short) 3, "monitor", (short) 50));
-        Application application2 = new Application(new User(1, "maks", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 140, (short) 120, (short) 170, 12F, new Faculty((short) 5, "wow", (short) 50));
-        Application application3 = new Application(new User(1, "ivan", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 160, (short) 130, (short) 130, 11F, new Faculty((short) 8, "hi", (short) 50));
-        Application application4 = new Application(new User(1, "vasyl", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 180, (short) 140, (short) 140, 12F, new Faculty((short) 1, "FIT", (short) 50));
-        Application application5 = new Application(new User(1, "artem", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 110, (short) 150, (short) 190, 8F, new Faculty((short) 4, "hello", (short) 50));
-        Application application6 = new Application(new User(1, "igor", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 120, (short) 160, (short) 150, 6F, new Faculty((short) 8, "hi", (short) 50));
-        Application application7 = new Application(new User(1, "vlad", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 140, (short) 170, (short) 180, 7F, new Faculty((short) 2, "Good", (short) 50));
-        Application application8 = new Application(new User(1, "sasha", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 150, (short) 180, (short) 160, 9F, new Faculty((short) 4, "hello", (short) 50));
-        Application application9 = new Application(new User(1, "nikita", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 180, (short) 190, (short) 170, 10F, new Faculty((short) 1, "FIT", (short) 50));
-        Application application10 = new Application(new User(1, "alex", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 190, (short) 190, (short) 180, 5F, new Faculty((short) 0, "world", (short) 50));
+        Application application = new Application(new User(1, "vova", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 150, (short) 160, (short) 180, 11F, new Faculty("monitor", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
+        Application application2 = new Application(new User(1, "maks", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 140, (short) 120, (short) 170, 12F, new Faculty("wow", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
+        Application application3 = new Application(new User(1, "ivan", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 160, (short) 130, (short) 130, 11F, new Faculty("hi", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
+        Application application4 = new Application(new User(1, "vasyl", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 180, (short) 140, (short) 140, 12F, new Faculty("FIT", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
+        Application application5 = new Application(new User(1, "artem", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 110, (short) 150, (short) 190, 8F, new Faculty("hello", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
+        Application application6 = new Application(new User(1, "igor", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 120, (short) 160, (short) 150, 6F, new Faculty("hi", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
+        Application application7 = new Application(new User(1, "vlad", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 140, (short) 170, (short) 180, 7F, new Faculty("Good", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
+        Application application8 = new Application(new User(1, "sasha", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 150, (short) 180, (short) 160, 9F, new Faculty("hello", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
+        Application application9 = new Application(new User(1, "nikita", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 180, (short) 190, (short) 170, 10F, new Faculty("FIT", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
+        Application application10 = new Application(new User(1, "alex", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 190, (short) 190, (short) 180, 5F, new Faculty("world", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
 
         applications.add(application);
         applications.add(application2);

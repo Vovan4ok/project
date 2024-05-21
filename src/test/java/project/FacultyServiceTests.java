@@ -88,6 +88,6 @@ public class FacultyServiceTests {
     }
 
     private Faculty getTestFaculty() {
-        return new Faculty("test", (short) 100);
+        return new Faculty("test", (short) 100, "random", 2005, 2000, "random", "random", "random", "random", "random");
     }
 }

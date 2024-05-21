@@ -18,7 +18,7 @@
 </head>
 
 <body class="body">
-<div class="container">
+<div class="container" <c:if test="${role=='ROLE_USER'}">style="display: flex; flex-flow: column nowrap; align-items: center; justify-content: space-between;"</c:if>>
 
     <c:choose>
         <c:when test="${role == 'ROLE_USER'}">
@@ -112,7 +112,7 @@
                                 <a href="/acceptApplication?id=${application.id}" class="table-button-column-button"><spring:message code="listOfApplicants.table-accept" /></a>
                             </td>
                             <td class="table-button-column table-td">
-                                <a href="/deleteApplication?id=${application.id}" class="table-button-column-button delete-button"><spring:message code="listOfApplicants.table-delete" /></a>
+                                <a href="/declineApplication?id=${application.id}" class="table-button-column-button delete-button"><spring:message code="listOfApplicants.table-delete" /></a>
                             </td>
                         </tr>
                     </c:forEach>

@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import project.domain.Application;
 import project.domain.Faculty;
+import project.domain.Status;
+import project.domain.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +14,10 @@ import java.util.Optional;
 public interface ApplicationRepository extends JpaRepository<Application, Integer> {
     Optional<Application> findById(Integer id);
 
-    List<Application> readAllByFacultyAndConfirmedOrderByRatingMarkDesc(Faculty faculty, Boolean confirmed);
+    List<Application> readAllByFacultyAndStatusOrderByRatingMarkDesc(Faculty faculty, Status status);
 
-    List<Application> readAllByConfirmed(Boolean confirmed);
+    List<Application> readAllByStatus(Status status);
+
+    List<Application> readAllByApplicant(User user);
 
 }
