@@ -46,7 +46,7 @@ public class UserController {
             @RequestParam("imageFile") MultipartFile image,
             HttpServletRequest request) throws IOException {
         logger.info("User is trying to register");
-        User userForm = UserDTOHelper.createUser(name, surname, email, password, patronimic, image.getOriginalFilename());
+        User userForm = UserDTOHelper.createUser(name, surname, patronimic, email, password, image.getOriginalFilename());
         if(userService.save(userForm)) {
             user = userService.getUserByEmail(userForm.getEmail());
             saveImage(image);

@@ -20,7 +20,7 @@
     width: 80%;
     height: 150px;
     padding: 15px;
-    margin: 20px auto;
+    margin-top: 20px;
     background-color: #ffffff;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -45,6 +45,7 @@
 }
 .info-block-marks{
     height: 100%;
+    width: 600px;
     display: flex;
     flex-flow: column nowrap;
     justify-content: space-between;
@@ -53,7 +54,7 @@
 .info-block-rating{
     display: flex;
     flex-flow: column nowrap;
-    align-items: center;
+    align-items: end;
     justify-content: space-around;
-    margin-left: 250px;
+    margin-left: 65px;
 }
