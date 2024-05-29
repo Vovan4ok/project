@@ -5,13 +5,12 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import project.domain.Application;
-import project.domain.Faculty;
 import project.domain.Status;
 import project.domain.User;
+import project.dto.UserDTOHelper;
 import project.service.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -44,10 +42,11 @@ public class UserController {
             @RequestParam("surname") String surname,
             @RequestParam("email") String email,
             @RequestParam("password") String password,
+            @RequestParam("patronimic") String patronimic,
             @RequestParam("imageFile") MultipartFile image,
             HttpServletRequest request) throws IOException {
         logger.info("User is trying to register");
-        User userForm = UserDTOHelper.createUser(name, surname, email, password, image.getOriginalFilename());
+        User userForm = UserDTOHelper.createUser(name, surname, email, password, patronimic, image.getOriginalFilename());
         if(userService.save(userForm)) {
             user = userService.getUserByEmail(userForm.getEmail());
             saveImage(image);
@@ -85,6 +84,11 @@ public class UserController {
             request.setAttribute("applications", applications);
         }
         return "home";
+    }
+
+    @GetMapping(value="/addMenu")
+    public String addMenu() {
+        return "addMenu";
     }
 
     public void saveImage(MultipartFile file) throws IOException {

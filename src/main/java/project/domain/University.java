@@ -3,17 +3,16 @@ package project.domain;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Objects;
 
 @Entity
-@Table(name="faculties")
+@Table(name="universities")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode
 @ToString
-public class Faculty {
+public class University {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name="id")
@@ -25,14 +24,14 @@ public class Faculty {
     @Column(name="short_name")
     private String shortName;
 
-    @Column(name="head_of_faculty")
-    private String headOfFaculty;
+    @Column(name="description")
+    private String description;
 
     @Column(name="established_year")
-    private Integer establishedYear;
+    private Short establishedYear;
 
-    @Column(name="number_of_students")
-    private Integer numberOfStudents;
+    @Column(name="rector")
+    private String rector;
 
     @Column(name="address")
     private String address;
@@ -46,24 +45,15 @@ public class Faculty {
     @Column(name="phone")
     private String phone;
 
-    @Column(name="description")
-    private String description;
-
-    @ManyToOne
-    @JoinColumn(name="university_id")
-    private University university;
-
-    public Faculty(String name, String shortName, String headOfFaculty, Integer establishedYear, Integer numberOfStudents, String address, String websiteUrl, String email, String phone, String description, University university) {
+    public University(String name, String shortName, String description, Short establishedYear, String rector, String address, String websiteUrl, String email, String phone) {
         this.name = name;
         this.shortName = shortName;
-        this.headOfFaculty = headOfFaculty;
+        this.description = description;
         this.establishedYear = establishedYear;
-        this.numberOfStudents = numberOfStudents;
+        this.rector = rector;
         this.address = address;
         this.websiteUrl = websiteUrl;
         this.email = email;
         this.phone = phone;
-        this.description = description;
-        this.university = university;
     }
 }

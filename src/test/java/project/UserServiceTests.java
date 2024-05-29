@@ -82,6 +82,7 @@ public class UserServiceTests {
 		User user = new User();
 		user.setName("test1");
 		user.setSurname("test1");
+		user.setPatronimic("test1");
 		user.setEmail("test1@gmail.com");
 		user.setPassword("test1");
 		user.setRole(Role.ROLE_USER);

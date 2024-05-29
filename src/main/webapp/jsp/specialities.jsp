@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculties</title>
+    <title>Specialities</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/faculties.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
@@ -67,13 +67,15 @@
         </c:when>
     </c:choose>
     <main class="main">
-        <c:forEach var="faculty" items="${faculties}">
-            <div class="info-block">
-                <h1 class="info-block-header">${faculty.name}</h1>
-                <p class="info-block-text"><span><spring:message code="faculty.year" /></span> ${faculty.establishedYear}</p>
-                <p class="info-block-text"><span><spring:message code="faculties.number-of-students" /></span> ${faculty.numberOfStudents}</p>
-                <p class="info-block-text"><span><spring:message code="faculties.website-url" /></span> <a target="_blank" class="website-link" href="${faculty.websiteUrl}">${faculty.websiteUrl}</a></p>
-                <a href="/faculties/${faculty.id}" class="info-block-details"><spring:message code="faculties.details" /></a>
+        <c:forEach var="speciality" items="${specialities}">
+            <div class="info-block" style="height: 320px;">
+                <h1 class="info-block-header">${speciality.name}</h1>
+                <p class="info-block-text"><span><spring:message code="speciality.level" /></span> ${speciality.level}</p>
+                <p class="info-block-text"><span><spring:message code="speciality.code" /></span> ${speciality.code}</p>
+                <p class="info-block-text"><span><spring:message code="speciality.accreditation" /></span> ${speciality.accreditation}</p>
+                <p class="info-block-text"><span><spring:message code="speciality.university" /></span> ${speciality.department.faculty.university.name}</p>
+                <p class="info-block-text"><span><spring:message code="speciality.faculty" /></span> ${speciality.department.faculty.name}</p>
+                <a href="/specialities/${speciality.id}" class="info-block-details"><spring:message code="faculties.details" /></a>
             </div>
         </c:forEach>
     </main>

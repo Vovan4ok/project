@@ -1,0 +1,32 @@
+@import url("reset.css");
+@import url("header.css");
+@import url("footer.css");
+@import url("main.css");
+
+.header-logo-block{
+    width: 350px;
+}
+.main{
+    width: 100%;
+    min-height: 390px;
+    margin: 40px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.menu-block{
+    height: 50px;
+    width: 80%;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    justify-content: space-between;
+}
+.menu-block a{
+    font-size: 20px;
+    color: #007bff;
+    text-decoration: none;
+}
+.menu-block a:hover{
+    text-decoration: underline;
+}

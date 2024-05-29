@@ -9,7 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculties</title>
+    <title>Departments</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/faculties.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
@@ -67,13 +67,13 @@
         </c:when>
     </c:choose>
     <main class="main">
-        <c:forEach var="faculty" items="${faculties}">
+        <c:forEach var="department" items="${departments}">
             <div class="info-block">
-                <h1 class="info-block-header">${faculty.name}</h1>
-                <p class="info-block-text"><span><spring:message code="faculty.year" /></span> ${faculty.establishedYear}</p>
-                <p class="info-block-text"><span><spring:message code="faculties.number-of-students" /></span> ${faculty.numberOfStudents}</p>
-                <p class="info-block-text"><span><spring:message code="faculties.website-url" /></span> <a target="_blank" class="website-link" href="${faculty.websiteUrl}">${faculty.websiteUrl}</a></p>
-                <a href="/faculties/${faculty.id}" class="info-block-details"><spring:message code="faculties.details" /></a>
+                <h1 class="info-block-header">${department.name}</h1>
+                <p class="info-block-text"><span><spring:message code="faculty.year" /></span> ${department.establishedYear}</p>
+                <p class="info-block-text"><span><spring:message code="department.number-of-professors" /></span> ${department.numberOfProfessors}</p>
+                <p class="info-block-text"><span><spring:message code="department.number-of-assistants" /></span> ${department.numberOfAssistants}</p>
+                <a href="/departments/${department.id}" class="info-block-details"><spring:message code="faculties.details" /></a>
             </div>
         </c:forEach>
     </main>

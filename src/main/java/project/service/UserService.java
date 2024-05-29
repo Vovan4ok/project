@@ -13,6 +13,8 @@ import project.domain.User;
 
 import org.slf4j.Logger;
 
+import java.util.List;
+
 @Service("userService")
 public class UserService {
     @Autowired
@@ -53,5 +55,9 @@ public class UserService {
             logger.info("The user with email + " + email + " doesn't exist.");
             throw new NullPointerException();
         }
+    }
+
+    public List<User> findAll() {
+        return userRepository.findAll();
     }
 }

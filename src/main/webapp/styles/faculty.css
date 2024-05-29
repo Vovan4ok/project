@@ -8,7 +8,7 @@
     min-height: 390px;
     margin: 40px 0;
 }
-.faculty-block {
+.info-block {
     width: 80%;
     padding: 40px;
     margin: 0 auto;
@@ -21,7 +21,7 @@
     align-items: flex-start;
 }
 
-.faculty-block h1 {
+.info-block h1 {
     font-family: 'Itim';
     font-size: 36px;
     color: black;
@@ -30,8 +30,8 @@
     width: 100%;
 }
 
-.faculty-block p,
-.faculty-block a {
+.info-block p,
+.info-block a {
     font-family: 'Itim';
     font-size: 20px;
     color: black;
@@ -39,11 +39,61 @@
     text-align: left;
 }
 
-.faculty-block a {
+.info-block p span {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.info-block a {
     color: #007bff;
     text-decoration: none;
 }
 
-.faculty-block a:hover {
+.info-block a:hover {
+    text-decoration: underline;
+}
+.info-block-details, .edit-button, .delete-button{
+    width: 200px;
+    height: 50px;
+    border-radius: 10px;
+    font-family: 'Itim';
+    font-size: 20px;
+    color: black;
+    background-color: #DCFDFF;
+    border: none;
+    transition: 0.5s background-color;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+.info-block-details:hover{
+    background-color: rgb(8, 8, 135);
+    color: white;
+    cursor: pointer;
+}
+.info-block-buttons {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+}
+.edit-button{
+    background-color: #F3F0B7;
+    align-self: start;
+}
+.delete-button{
+    background-color: #F00;
+    align-self: end;
+}
+.edit-button:hover{
+    background-color: #5c5c25;
+    color: white;
+    text-decoration: underline;
+}
+.delete-button:hover{
+    background-color: #850000;
+    color: white;
     text-decoration: underline;
 }

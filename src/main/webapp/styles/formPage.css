@@ -3,11 +3,12 @@
 @import url("footer.css");
 @import url("main.css");
 
-.header-logo-block{
+.admin-header-logo-block{
     width: 350px;
 }
 .main{
     width: 100%;
+    min-height: 390px;
     margin: 40px auto;
     display: flex;
     flex-flow: column nowrap;
@@ -47,6 +48,14 @@
     border: none;
     color: black;
 }
+.main-form-submit-block{
+    margin-top: 28px;
+    width: 265px;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}
 .main-form-submit-block-button{
     width: 180px;
     height: 40px;
@@ -61,10 +70,18 @@
     border: none;
     transition: 0.5s background-color;
     align-self: center;
-    margin-top: 20px;
 }
 .main-form-submit-block-button:hover{
     color: #FFFFFF;
     background-color: rgb(8, 8, 135);
     cursor: pointer;
+}
+.main-form-submit-block-span{
+    color: #9F9D9D;
+    font-family: 'Itim';
+    font-size: 13px;
+    margin-left: 15px;
+}
+.main-form-submit-block-span-link{
+    color: black;
 }

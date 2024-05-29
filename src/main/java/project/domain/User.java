@@ -32,6 +32,9 @@ public class User {
     @Column(name="surname")
     private String surname;
 
+    @Column(name="patronimic")
+    private String patronimic;
+
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -44,6 +47,17 @@ public class User {
         this.password = user.password;
         this.name = user.name;
         this.surname = user.surname;
+        this.patronimic = user.patronimic;
         this.role = user.role;
+    }
+
+    public User(String email, String password, String name, String surname, String patronimic, Role role, String imageUrl) {
+        this.email = email;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.patronimic = patronimic;
+        this.role = role;
+        this.imageUrl = imageUrl;
     }
 }

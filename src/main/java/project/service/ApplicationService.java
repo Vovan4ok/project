@@ -5,14 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import project.dao.ApplicationRepository;
-import project.domain.Application;
-import project.domain.Faculty;
-import project.domain.Status;
-import project.domain.User;
+import project.domain.*;
 
 import java.util.List;
 
-@Service("aplicationService")
+@Service("applicationService")
 public class ApplicationService {
     @Autowired
     private ApplicationRepository applicationRepository;
@@ -22,21 +19,25 @@ public class ApplicationService {
         this.applicationRepository = applicationRepository;
     }
 
-    public void save(Application application, User user) {
+    public boolean save(Application application, User user) {
+        if(applicationRepository.existsByApplicantAndSpeciality(user, application.getSpeciality())) {
+            return false;
+        }
         application.setApplicant(user);
         application.setRatingMark();
         application.setStatus(Status.UNKNOWN);
         logger.info("Save the application = " + application + " to DB.");
         applicationRepository.save(application);
+        return true;
     }
 
     public Application findById(Integer id) {
         logger.info("Get the application with id = " + id + " from DB.");
         return applicationRepository.findById(id).get();
     }
-    public List<Application> getApplicationsByFacultyAndStatus(Faculty faculty, Status status) {
-        logger.info("Get all applications with facultyId = " + faculty + " from DB.");
-        return applicationRepository.readAllByFacultyAndStatusOrderByRatingMarkDesc(faculty, status);
+    public List<Application> getApplicationsBySpeciality(Speciality speciality) {
+        logger.info("Get all applications with speciality = " + speciality + " from DB.");
+        return applicationRepository.readAllBySpecialityAndStatusOrderByRatingMarkDesc(speciality, Status.ACCEPTED);
     }
 
     public void update(Application application) {
@@ -45,17 +46,20 @@ public class ApplicationService {
     }
 
     public List<Application> readAllByStatus(Status status) {
-        logger.info("Get all applications with confirmed = " + status + " from DB.");
+        logger.info("Get all applications with status = " + status + " from DB.");
         return applicationRepository.readAllByStatus(status);
-    }
-
-    public void delete(Application application) {
-        logger.info("Delete application = " + application + " from DB.");
-        applicationRepository.delete(application);
     }
 
     public List<Application> readAllByApplicant(User user) {
         logger.info("Get all applications by user = " + user + " from DB.");
         return applicationRepository.readAllByApplicant(user);
+    }
+
+    public List<Application> readAll() {
+        return applicationRepository.findAll();
+    }
+
+    public void delete(Application application) {
+        applicationRepository.delete(application);
     }
 }

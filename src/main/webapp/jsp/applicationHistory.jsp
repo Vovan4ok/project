@@ -9,8 +9,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculties</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/userFaculties.css">
+    <title>List</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/faculties.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
@@ -26,8 +26,8 @@
         </div>
         <ul class="header-list">
             <li class="header-list-item" style="margin-right: 30px;"><a href="/home" class="header-list-item-link"><spring:message code="user.anchor1"/></a></li>
-            <li class="header-list-item" style="margin-right: 30px; text-decoration: underline;"><a href="/userFaculties" class="header-list-item-link"><spring:message code="user.anchor2"/></a></li>
-            <li class="header-list-item"><a href="/application" class="header-list-item-link"><spring:message code="user.anchor3"/></a></li>
+            <li class="header-list-item" style="margin-right: 30px; text-decoration: underline;"><a href="/universities" class="header-list-item-link"><spring:message code="user.anchor2"/></a></li>
+            <li class="header-list-item"><a href="/makeApplication" class="header-list-item-link"><spring:message code="user.anchor3"/></a></li>
         </ul>
         <select id="locales">
             <option value="en">EN</option>
@@ -41,26 +41,18 @@
         </form>
     </header>
     <main class="main">
-        <table class="main-table">
-            <thead class="table-thead">
-            <tr class="table-row">
-                <th class="table-number-column table-th"><spring:message code="userFaculties.table-id" /></th>
-                <th class="table-faculty-column table-th"><spring:message code="userFaculties.table-faculty" /></th>
-                <th class="table-plan-column table-th"><spring:message code="userFaculties.table-plan" /></th>
-                <th class="table-list-column"></th>
-            </tr>
-            </thead>
-            <tbody class="table-tbody">
-            <c:forEach var="faculty" items="${faculties}">
-                <tr class="table-row">
-                    <td class="table-number-column table-td">${faculty.id}</td>
-                    <td class="table-faculty-column table-td">${faculty.name}</td>
-                    <td class="table-plan-column table-td">${faculty.planNumber}</td>
-                    <td class="table-list-column table-td"><a href="/list-of-applicants/${faculty.id}" class="table-link"><spring:message code="userFaculties.table-link" /></a></td>
-                </tr>
-            </c:forEach>
-            </tbody>
-        </table>
+        <c:forEach var="application" items="${applications}">
+            <div class="info-block" style="height: 350px;">
+                <h1 class="info-block-header">${application.speciality.department.faculty.university.shortName}/${application.speciality.department.faculty.shortName}/${application.speciality.department.shortName}/${application.speciality.shortName}</h1>
+                <p class="info-block-text"><spring:message code="application.maths" /> ${application.mathsMark}</p>
+                <p class="info-block-text"><spring:message code="application.english" /> ${application.englishMark}</p>
+                <p class="info-block-text"><spring:message code="application.physics" /> ${application.physicsMark}</p>
+                <p class="info-block-text"><spring:message code="application.certificate" /> ${application.certificateMark}</p>
+                <p class="info-block-text"><spring:message code="application.rating" /> ${application.ratingMark}</p>
+                <p class="info-block-text"><spring:message code="application.status" /> ${application.status}</p>
+                <a class="info-block-delete-button" href="/deleteApplication?application_id=${application.id}"><spring:message code="infoBlock.delete-button" /></a>
+            </div>
+        </c:forEach>
     </main>
     <jsp:include page="footer.jsp"></jsp:include>
 </div>

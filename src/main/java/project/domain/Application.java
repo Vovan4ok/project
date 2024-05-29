@@ -39,24 +39,34 @@ public class Application {
     private Float ratingMark;
 
     @ManyToOne
-    @JoinColumn(name="faculty_id")
-    private Faculty faculty;
+    @JoinColumn(name="speciality_id")
+    private Speciality speciality;
 
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public Application(User applicant, Short mathsMark, Short englishMark, Short physicsMark, Float certificateMark, Faculty faculty) {
+    public Application(User applicant, Short mathsMark, Short englishMark, Short physicsMark, Float certificateMark, Speciality speciality) {
         this.applicant = applicant;
         this.mathsMark = mathsMark;
         this.englishMark = englishMark;
         this.physicsMark = physicsMark;
         this.certificateMark = certificateMark;
-        this.ratingMark = (mathsMark + englishMark + physicsMark + (certificateMark / 12 * 200)) / 4;
-        this.faculty = faculty;
+        this.speciality = speciality;
         this.status = Status.UNKNOWN;
+        this.setRatingMark();
+    }
+
+    public Application(User applicant, Short mathsMark, Short englishMark, Short physicsMark, Float certificateMark, Speciality speciality, Status status) {
+        this.applicant = applicant;
+        this.mathsMark = mathsMark;
+        this.englishMark = englishMark;
+        this.physicsMark = physicsMark;
+        this.certificateMark = certificateMark;
+        this.speciality = speciality;
+        this.status = status;
     }
 
     public void setRatingMark() {
-        this.ratingMark = (this.mathsMark + this.englishMark + this.physicsMark + (this.certificateMark / 12 * 200)) / 4;
+        this.ratingMark = (float) (this.mathsMark * this.speciality.getMathsCoef() + this.englishMark * this.speciality.getEnglishCoef() + this.physicsMark * this.speciality.getPhysicsCoef() + this.certificateMark * 16.67 * this.speciality.getCertificateCoef());
     }
 }

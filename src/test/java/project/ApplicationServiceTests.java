@@ -1,21 +1,19 @@
 package project;
 
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.junit4.SpringRunner;
-import project.dao.ApplicationRepository;
 import project.domain.*;
-import project.service.ApplicationService;
-import project.service.FacultyService;
-import project.service.UserService;
+import project.service.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.*;
 
 @RunWith(SpringRunner.class)
@@ -23,149 +21,263 @@ import static org.junit.Assert.*;
 @DataJpaTest
 public class ApplicationServiceTests {
     @Autowired
-    private ApplicationService applicationService;
+    UniversityService universityService;
 
     @Autowired
-    private ApplicationRepository applicationRepository;
+    FacultyService facultyService;
 
     @Autowired
-    private FacultyService facultyService;
+    DepartmentService departmentService;
 
     @Autowired
-    private UserService userService;
+    SpecialityService specialityService;
+
+    @Autowired
+    ApplicationService applicationService;
+
+    @Autowired
+    UserService userService;
 
     @Test
     public void testSave() {
-        List<Application> applications = applicationRepository.findAll();
+        List<Application> applications = applicationService.readAll();
         assertThat(applications, hasSize(0));
 
-        for(Application application : getTestData()) {
-            userService.save(application.getApplicant());
-            facultyService.save(application.getFaculty());
-            Faculty faculty = facultyService.getFacultyByName(application.getFaculty().getName());
-            application.setFaculty(faculty);
-            User user = userService.getUserByEmail(application.getApplicant().getEmail());
-            applicationService.save(application, user);
-        }
+        University university = getTestUniversity();
+        Faculty faculty = getTestFaculty();
+        Department department = getTestDepartment();
+        Speciality speciality = getTestSpecialities().get(0);
+        User user = getTestApplicants().get(0);
+        Application application = getTestData().get(0);
 
-        applications = applicationRepository.findAll();
-        assertThat(applications, hasSize(10));
+        universityService.save(university);
+        faculty.setUniversity(universityService.readAll().get(0));
+        facultyService.save(faculty);
+        department.setFaculty(facultyService.readAll().get(0));
+        departmentService.save(department);
+        speciality.setDepartment(departmentService.readAll().get(0));
+        specialityService.save(speciality);
+        userService.save(user);
+        application.setSpeciality(specialityService.readAll().get(0));
+        applicationService.save(application, userService.getUserByEmail("random1"));
+
+        applications = applicationService.readAll();
+        assertThat(applications, hasSize(1));
     }
 
     @Test
     public void testFindById() {
-        List<Application> applications = applicationRepository.findAll();
+        List<Application> applications = applicationService.readAll();
         assertThat(applications, hasSize(0));
 
-        for(Application application : getTestData()) {
-            userService.save(application.getApplicant());
-            facultyService.save(application.getFaculty());
-            Faculty faculty = facultyService.getFacultyByName(application.getFaculty().getName());
-            application.setFaculty(faculty);
-            User user = userService.getUserByEmail(application.getApplicant().getEmail());
-            applicationService.save(application, user);
-        }
+        University university = getTestUniversity();
+        Faculty faculty = getTestFaculty();
+        Department department = getTestDepartment();
+        Speciality speciality = getTestSpecialities().get(0);
+        User user = getTestApplicants().get(0);
+        Application application = getTestData().get(0);
 
-        applications = applicationRepository.findAll();
-        assertThat(applications, hasSize(10));
+        universityService.save(university);
+        faculty.setUniversity(universityService.readAll().get(0));
+        facultyService.save(faculty);
+        department.setFaculty(facultyService.readAll().get(0));
+        departmentService.save(department);
+        speciality.setDepartment(departmentService.readAll().get(0));
+        specialityService.save(speciality);
+        userService.save(user);
+        application.setSpeciality(specialityService.readAll().get(0));
+        applicationService.save(application, userService.getUserByEmail("random1"));
 
-        assertNotNull(applicationService.findById(applicationRepository.findAll().get(5).getId()));
+        applications = applicationService.readAll();
+        assertThat(applications, hasSize(1));
+
+        application = applicationService.findById(applications.get(0).getId());
+        assertNotNull(application);
     }
 
     @Test
-    public void testGetApplicationsByFaculty() {
-        List<Application> applications = applicationRepository.findAll();
+    public void testGetApplicationsBySpeciality() {
+        List<Application> applications = applicationService.readAll();
         assertThat(applications, hasSize(0));
 
-        for(Application application : getTestData()) {
-            userService.save(application.getApplicant());
-            facultyService.save(application.getFaculty());
-            Faculty faculty = facultyService.getFacultyByName(application.getFaculty().getName());
-            application.setFaculty(faculty);
-            User user = userService.getUserByEmail(application.getApplicant().getEmail());
-            applicationService.save(application, user);
+        University university = getTestUniversity();
+        Faculty faculty = getTestFaculty();
+        Department department = getTestDepartment();
+        User user = getTestApplicants().get(0);
+
+        universityService.save(university);
+        faculty.setUniversity(universityService.readAll().get(0));
+        facultyService.save(faculty);
+        department.setFaculty(facultyService.readAll().get(0));
+        departmentService.save(department);
+        userService.save(user);
+        for(Speciality speciality : getTestSpecialities()) {
+            speciality.setDepartment(departmentService.readAll().get(0));
+            specialityService.save(speciality);
         }
 
-        applications = applicationRepository.findAll();
-        assertThat(applications, hasSize(10));
+        int index = 0;
+        List<Speciality> specialities = specialityService.readAll();
+        for(Application application : getTestData()) {
+            application.setSpeciality(specialities.get(index % 2));
+            applicationService.save(application, userService.getUserByEmail("random1"));
+            index++;
+        }
 
-        applications = applicationService.getApplicationsByFacultyAndStatus(facultyService.getFacultyByName("FIT"), Status.UNKNOWN);
-        assertThat(applications, hasSize(2));
+        assertThat(applicationService.readAll(), hasSize(2));
+        for(Application application : applicationService.readAll()) {
+            application.setStatus(Status.ACCEPTED);
+            applicationService.update(application);
+        }
+        assertThat(applicationService.getApplicationsBySpeciality(specialities.get(0)), hasSize(1));
     }
 
     @Test
     public void testUpdate() {
-        User user = new User(0, "vova", "vova", "vova", "vova", Role.ROLE_USER, "vova");
-        facultyService.save(new Faculty((short) 1, "FIT", (short) 100, "random", 2005, 2000, "random", "random", "random", "random", "random"));
-
-        List<Application> applications = applicationRepository.findAll();
+        List<Application> applications = applicationService.readAll();
         assertThat(applications, hasSize(0));
 
-        userService.save(user);
-        user = userService.getUserByEmail(user.getEmail());
-        applicationService.save(new Application(user, (short) 150, (short) 150, (short) 150, 11F, facultyService.getFacultyByName("FIT")), user);
+        University university = getTestUniversity();
+        Faculty faculty = getTestFaculty();
+        Department department = getTestDepartment();
+        Speciality speciality = getTestSpecialities().get(0);
+        User user = getTestApplicants().get(0);
+        Application application = getTestData().get(0);
 
-        applications = applicationRepository.findAll();
+        universityService.save(university);
+        faculty.setUniversity(universityService.readAll().get(0));
+        facultyService.save(faculty);
+        department.setFaculty(facultyService.readAll().get(0));
+        departmentService.save(department);
+        speciality.setDepartment(departmentService.readAll().get(0));
+        specialityService.save(speciality);
+        userService.save(user);
+        application.setSpeciality(specialityService.readAll().get(0));
+        applicationService.save(application, userService.getUserByEmail("random1"));
+
+        applications = applicationService.readAll();
         assertThat(applications, hasSize(1));
 
-        applications.get(0).setStatus(Status.ACCEPTED);
-        applicationService.update(applications.get(0));
+        application = applications.get(0);
+        application.setMathsMark((short) 50);
+        application.setPhysicsMark((short) 50);
+        applicationService.update(application);
 
-        assertNotEquals(applicationRepository.findAll().get(0).getStatus(), Status.DECLINED);
+        assertNotEquals(applicationService.readAll().get(0).getMathsMark(), Short.valueOf( (short) 20));
+        assertNotEquals(applicationService.readAll().get(0).getPhysicsMark(), Short.valueOf( (short) 20));
     }
 
     @Test
-    public void testReadAllByConfirmed() {
-        List<Application> applications = applicationRepository.findAll();
+    public void testReadAllByStatus() {
+        List<Application> applications = applicationService.readAll();
         assertThat(applications, hasSize(0));
 
-        for(Application application : getTestData()) {
-            userService.save(application.getApplicant());
-            facultyService.save(application.getFaculty());
-            Faculty faculty = facultyService.getFacultyByName(application.getFaculty().getName());
-            application.setFaculty(faculty);
-            User user = userService.getUserByEmail(application.getApplicant().getEmail());
-            applicationService.save(application, user);
+        University university = getTestUniversity();
+        Faculty faculty = getTestFaculty();
+        Department department = getTestDepartment();
+        User user = getTestApplicants().get(0);
+
+        universityService.save(university);
+        faculty.setUniversity(universityService.readAll().get(0));
+        facultyService.save(faculty);
+        department.setFaculty(facultyService.readAll().get(0));
+        departmentService.save(department);
+        userService.save(user);
+        for(Speciality speciality : getTestSpecialities()) {
+            speciality.setDepartment(departmentService.readAll().get(0));
+            specialityService.save(speciality);
         }
 
-        applications = applicationRepository.findAll();
-        assertThat(applications, hasSize(10));
+        int index = 0;
+        List<Speciality> specialities = specialityService.readAll();
+        for(Application application : getTestData()) {
+            application.setSpeciality(specialities.get(index % 2));
+            applicationService.save(application, userService.getUserByEmail("random1"));
+            index++;
+        }
+        assertThat(applicationService.readAll(), hasSize(2));
+        index = 0;
+        for(Application application : applicationService.readAll()) {
+            if(index % 2 == 0) {
+                application.setStatus(Status.ACCEPTED);
+                applicationService.update(application);
+            }
+            index++;
+        }
+        assertThat(applicationService.readAllByStatus(Status.ACCEPTED), hasSize(1));
+    }
 
-        applications.get(5).setStatus(Status.ACCEPTED);
-        applicationService.update(applications.get(5));
-        applications.get(7).setStatus(Status.ACCEPTED);
-        applicationService.update(applications.get(7));
+    @Test
+    public void testReadAllByApplicant() {
+        List<Application> applications = applicationService.readAll();
+        assertThat(applications, hasSize(0));
 
+        University university = getTestUniversity();
+        Faculty faculty = getTestFaculty();
+        Department department = getTestDepartment();
 
-        applications = applicationService.readAllByStatus(Status.ACCEPTED);
-        assertThat(applications, hasSize(2));
+        universityService.save(university);
+        faculty.setUniversity(universityService.readAll().get(0));
+        facultyService.save(faculty);
+        department.setFaculty(facultyService.readAll().get(0));
+        departmentService.save(department);
+        for(Speciality speciality : getTestSpecialities()) {
+            speciality.setDepartment(departmentService.readAll().get(0));
+            specialityService.save(speciality);
+        }
+        for(User user : getTestApplicants()) {
+            userService.save(user);
+        }
+
+        List<User> users = userService.findAll();
+        int index = 0;
+        for(Application application : getTestData()) {
+            application.setSpeciality(specialityService.readAll().get(0));
+            applicationService.save(application, users.get(index % 2));
+            index++;
+        }
+        assertThat(applicationService.readAll(), hasSize(2));
+        assertThat(applicationService.readAllByApplicant(users.get(0)), hasSize(1));
     }
 
     private List<Application> getTestData() {
         List<Application> applications = new ArrayList<>();
 
-        Application application = new Application(new User(1, "vova", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 150, (short) 160, (short) 180, 11F, new Faculty("monitor", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
-        Application application2 = new Application(new User(1, "maks", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 140, (short) 120, (short) 170, 12F, new Faculty("wow", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
-        Application application3 = new Application(new User(1, "ivan", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 160, (short) 130, (short) 130, 11F, new Faculty("hi", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
-        Application application4 = new Application(new User(1, "vasyl", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 180, (short) 140, (short) 140, 12F, new Faculty("FIT", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
-        Application application5 = new Application(new User(1, "artem", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 110, (short) 150, (short) 190, 8F, new Faculty("hello", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
-        Application application6 = new Application(new User(1, "igor", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 120, (short) 160, (short) 150, 6F, new Faculty("hi", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
-        Application application7 = new Application(new User(1, "vlad", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 140, (short) 170, (short) 180, 7F, new Faculty("Good", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
-        Application application8 = new Application(new User(1, "sasha", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 150, (short) 180, (short) 160, 9F, new Faculty("hello", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
-        Application application9 = new Application(new User(1, "nikita", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 180, (short) 190, (short) 170, 10F, new Faculty("FIT", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
-        Application application10 = new Application(new User(1, "alex", "vova", "vova", "vova", Role.ROLE_USER, "vova"), (short) 190, (short) 190, (short) 180, 5F, new Faculty("world", (short) 50, "random", 2005, 2000, "random", "random", "random", "random", "random"));
-
-        applications.add(application);
-        applications.add(application2);
-        applications.add(application3);
-        applications.add(application4);
-        applications.add(application5);
-        applications.add(application6);
-        applications.add(application7);
-        applications.add(application8);
-        applications.add(application9);
-        applications.add(application10);
+        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, Status.ACCEPTED));
+        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, Status.ACCEPTED));
+        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, Status.ACCEPTED));
+        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, Status.ACCEPTED));
+        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, Status.ACCEPTED));
 
         return applications;
+    }
+
+    private List<User> getTestApplicants() {
+        List<User> users = new ArrayList<>();
+
+        users.add(new User("random1", "random1", "random1", "random1", "random1", Role.ROLE_USER, "random1"));
+        users.add(new User("random2", "random2", "random2", "random2", "random2", Role.ROLE_USER, "random2"));
+
+        return users;
+    }
+
+    private List<Speciality> getTestSpecialities() {
+        List<Speciality> specialities = new ArrayList<>();
+
+        specialities.add(new Speciality("random1", "random1", 0.3F, 0.3F, 0.3F, 0.1F));
+        specialities.add(new Speciality("random2", "random2", 0.3F, 0.3F, 0.3F, 0.1F));
+
+        return specialities;
+    }
+
+    private Department getTestDepartment() {
+        return new Department("random1", "random1", null, "", "", (short) 20, (short) 20, (short) 20);
+    }
+
+    private Faculty getTestFaculty() {
+        return new Faculty("random1", "random1", "random1", 20, 20, "random1", "random1", "random1", "random1", "random1", null);
+    }
+    private University getTestUniversity() {
+        return new University("KNU", "KNU", "random", (short) 2000, "random", "random", "random", "random", "random");
     }
 }

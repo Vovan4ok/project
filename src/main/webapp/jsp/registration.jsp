@@ -31,6 +31,10 @@
                 <input name="surname" type="text" id="surname" class="main-form-block-input" placeholder="<spring:message code="form.surname-input"/>" required>
             </div>
             <div class="main-form-block">
+                <label for="patronimic" class="main-form-block-label"><spring:message code="form.patronimic-label"/></label>
+                <input name="patronimic" type="text" id="patronimic" class="main-form-block-input" placeholder="<spring:message code="form.patronimic-input"/>" required>
+            </div>
+            <div class="main-form-block">
                 <span class="main-form-block-label" style="color: red;">${msg}</span>
                 <label for="email" class="main-form-block-label"><spring:message code="form.email-label"/></label>
                 <input name="email" type="email" id="email" class="main-form-block-input" placeholder="<spring:message code="form.email-input"/>" required>

@@ -9,9 +9,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Faculties</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/faculties.css">
+    <title>${department.name}</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/faculty.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/i18n.js"></script>
 </head>
@@ -67,15 +68,27 @@
         </c:when>
     </c:choose>
     <main class="main">
-        <c:forEach var="faculty" items="${faculties}">
-            <div class="info-block">
-                <h1 class="info-block-header">${faculty.name}</h1>
-                <p class="info-block-text"><span><spring:message code="faculty.year" /></span> ${faculty.establishedYear}</p>
-                <p class="info-block-text"><span><spring:message code="faculties.number-of-students" /></span> ${faculty.numberOfStudents}</p>
-                <p class="info-block-text"><span><spring:message code="faculties.website-url" /></span> <a target="_blank" class="website-link" href="${faculty.websiteUrl}">${faculty.websiteUrl}</a></p>
-                <a href="/faculties/${faculty.id}" class="info-block-details"><spring:message code="faculties.details" /></a>
-            </div>
-        </c:forEach>
+        <div class="info-block">
+            <h1>${department.faculty.university.name}/${department.faculty.name}/${department.name} (${department.shortName})</h1>
+            <p><span><spring:message code="department.head" /></span> ${department.headOfDepartment}</p>
+            <p><span><spring:message code="faculty.year" /></span> ${department.establishedYear}</p>
+            <p><span><spring:message code="department.number-of-professors" /></span> ${department.numberOfProfessors}</p>
+            <p><span><spring:message code="department.number-of-assistants" /></span> ${department.numberOfAssistants}</p>
+            <p>${department.description}</p>
+            <a href="/specialities?department_id=${department.id}" class="info-block-details"><spring:message code="department.specialities" /></a>
+            <c:choose>
+                <c:when test="${role == 'ROLE_ADMIN'}">
+                    <div class="info-block-buttons">
+                        <a href="/updateDepartment?id=${department.id}" style="text-decoration: none;">
+                            <button class="edit-button"><spring:message code="infoBlock.edit-button" /></button>
+                        </a>
+                        <a href="/deleteDepartment?id=${department.id}" style="text-decoration: none;">
+                            <button class="delete-button"><spring:message code="infoBlock.delete-button" /></button>
+                        </a>
+                    </div>
+                </c:when>
+            </c:choose>
+        </div>
     </main>
     <jsp:include page="footer.jsp"></jsp:include>
 </div>
