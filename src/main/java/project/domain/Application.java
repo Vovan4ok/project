@@ -29,8 +29,8 @@ public class Application {
     @Column(name="english_mark")
     private Short englishMark;
 
-    @Column(name="physics_mark")
-    private Short physicsMark;
+    @Column(name="ukrainian_mark")
+    private Short ukrainianMark;
 
     @Column(name="certificate_mark")
     private Float certificateMark;
@@ -42,31 +42,43 @@ public class Application {
     @JoinColumn(name="speciality_id")
     private Speciality speciality;
 
+    @Column(name="priority")
+    private Short priority;
+
     @Enumerated(EnumType.STRING)
     private Status status;
 
-    public Application(User applicant, Short mathsMark, Short englishMark, Short physicsMark, Float certificateMark, Speciality speciality) {
+    public Application(User applicant, Short mathsMark, Short englishMark, Short ukrainianMark, Float certificateMark, Speciality speciality, Short priority) {
         this.applicant = applicant;
         this.mathsMark = mathsMark;
         this.englishMark = englishMark;
-        this.physicsMark = physicsMark;
+        this.ukrainianMark = ukrainianMark;
         this.certificateMark = certificateMark;
         this.speciality = speciality;
+        this.priority = priority;
         this.status = Status.UNKNOWN;
         this.setRatingMark();
     }
 
-    public Application(User applicant, Short mathsMark, Short englishMark, Short physicsMark, Float certificateMark, Speciality speciality, Status status) {
+    public Application(User applicant, Short mathsMark, Short englishMark, Short ukrainianMark, Float certificateMark, Speciality speciality, Short priority, Status status) {
         this.applicant = applicant;
         this.mathsMark = mathsMark;
         this.englishMark = englishMark;
-        this.physicsMark = physicsMark;
+        this.ukrainianMark = ukrainianMark;
         this.certificateMark = certificateMark;
         this.speciality = speciality;
+        this.priority = priority;
         this.status = status;
     }
 
     public void setRatingMark() {
-        this.ratingMark = (float) (this.mathsMark * this.speciality.getMathsCoef() + this.englishMark * this.speciality.getEnglishCoef() + this.physicsMark * this.speciality.getPhysicsCoef() + this.certificateMark * 16.67 * this.speciality.getCertificateCoef());
+        float rawMark = (float) (
+                this.mathsMark * this.speciality.getMathsCoef() +
+                        this.englishMark * this.speciality.getEnglishCoef() +
+                        this.ukrainianMark * this.speciality.getUkrainianCoef() +
+                        this.certificateMark * 16.67 * this.speciality.getCertificateCoef()
+        );
+        this.ratingMark = Math.round(rawMark * 10f) / 10f;
     }
+
 }

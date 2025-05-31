@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 
 <head>
     <meta charset="UTF-8">
@@ -12,6 +12,7 @@
     <title>Specialities</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/faculties.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/i18n.js"></script>
 </head>
@@ -73,8 +74,8 @@
                 <p class="info-block-text"><span><spring:message code="speciality.level" /></span> ${speciality.level}</p>
                 <p class="info-block-text"><span><spring:message code="speciality.code" /></span> ${speciality.code}</p>
                 <p class="info-block-text"><span><spring:message code="speciality.accreditation" /></span> ${speciality.accreditation}</p>
-                <p class="info-block-text"><span><spring:message code="speciality.university" /></span> ${speciality.department.faculty.university.name}</p>
-                <p class="info-block-text"><span><spring:message code="speciality.faculty" /></span> ${speciality.department.faculty.name}</p>
+                <p class="info-block-text"><span><spring:message code="speciality.university" /></span> <a class="website-link" href="/universities/${speciality.department.faculty.university.id}">${speciality.department.faculty.university.name}</a></p>
+                <p class="info-block-text"><span><spring:message code="speciality.faculty" /></span> <a class="website-link" href="/universities/${speciality.department.faculty.id}">${speciality.department.faculty.name}</a></p>
                 <a href="/specialities/${speciality.id}" class="info-block-details"><spring:message code="faculties.details" /></a>
             </div>
         </c:forEach>

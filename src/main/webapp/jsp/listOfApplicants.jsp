@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 
 <head>
     <meta charset="UTF-8">
@@ -25,8 +25,8 @@
         </div>
         <ul class="header-list">
             <li class="header-list-item" style="margin-right: 30px;"><a href="/home" class="header-list-item-link"><spring:message code="user.anchor1"/></a></li>
-            <li class="header-list-item" style="margin-right: 30px;"><a href="/universities" class="header-list-item-link"><spring:message code="user.anchor2"/></a></li>
-            <li class="header-list-item" style="text-decoration: underline;"><a href="/makeApplication" class="header-list-item-link"><spring:message code="user.anchor3"/></a></li>
+            <li class="header-list-item" style="margin-right: 30px;text-decoration: underline;"><a href="/universities" class="header-list-item-link"><spring:message code="user.anchor2"/></a></li>
+            <li class="header-list-item"><a href="/makeApplication" class="header-list-item-link"><spring:message code="user.anchor3"/></a></li>
         </ul>
         <select id="locales">
             <option value="en">EN</option>
@@ -42,24 +42,31 @@
     <main class="main">
         <h1 class="main-heading">${speciality.department.faculty.university.name}/${speciality.department.faculty.name}/${speciality.department.name}/${speciality.name} (${speciality.shortName})</h1>
         <c:forEach var="applicationDTO" items="${applicationDTOS}">
-            <div class="info-block">
-                <h2 class="info-block-place">${applicationDTO.place}</h2>
-                <div class="info-block-marks">
-                    <p class="info-block-text"><span><spring:message code="application.applicant" /></span> ${applicationDTO.application.applicant.surname} ${applicationDTO.application.applicant.name} ${applicationDTO.application.applicant.patronimic}</p>
-                    <p class="info-block-text"><span><spring:message code="application.maths" /></span> ${applicationDTO.application.mathsMark}</p>
-                    <p class="info-block-text"><span><spring:message code="application.physics" /></span> ${applicationDTO.application.physicsMark}</p>
-                    <p class="info-block-text"><span><spring:message code="application.english" /></span> ${applicationDTO.application.englishMark}</p>
-                    <p class="info-block-text"><span><spring:message code="application.certificate" /></span> ${applicationDTO.application.certificateMark}</p>
-                </div>
-                <div class="info-block-rating">
-                    <p class="info-block-text"><span><spring:message code="application.rating" /></span> ${applicationDTO.application.ratingMark}</p>
-                    <p class="info-block-text" style="margin-top: 20px;">
+            <div class="applicant-card">
+                <div class="card-header">
+                    <div class="place">#${applicationDTO.place}</div>
+                    <div class="name">${applicationDTO.application.applicant.surname} ${applicationDTO.application.applicant.name} ${applicationDTO.application.applicant.patronimic}</div>
+                    <div class="status
+                        ${applicationDTO.place <= speciality.budgetPlaces ? 'budget' :
+                          applicationDTO.place <= speciality.planNumber ? 'contract' : 'miss'}">
                         <c:choose>
-                            <c:when test="${applicationDTO.place <= speciality.budgetPlaces}"><span style="color: #5cb815;">Budget</span></c:when>
-                            <c:when test="${applicationDTO.place <= speciality.planNumber}"><span style="color: #d2c914;">Contract</span></c:when>
-                            <c:when test="${applicationDTO.place > speciality.planNumber}"><span style="color: #bc0505;">Miss</span></c:when>
+                            <c:when test="${applicationDTO.place <= speciality.budgetPlaces}">Budget</c:when>
+                            <c:when test="${applicationDTO.place <= speciality.planNumber}">Contract</c:when>
+                            <c:otherwise>Miss</c:otherwise>
                         </c:choose>
-                    </p>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="marks">
+                        <div><span><spring:message code="application.maths" /></span> ${applicationDTO.application.mathsMark}</div>
+                        <div><span><spring:message code="application.ukrainian" /></span> ${applicationDTO.application.ukrainianMark}</div>
+                        <div><span><spring:message code="application.english" /></span> ${applicationDTO.application.englishMark}</div>
+                        <div><span><spring:message code="application.certificate" /></span> ${applicationDTO.application.certificateMark}</div>
+                    </div>
+                    <div class="rating-div">
+                        <div class="rating"><spring:message code="application.priority" /> ${applicationDTO.application.priority}</div>
+                        <div class="rating" style="margin-top: 20px;"><spring:message code="application.rating" /> ${applicationDTO.application.ratingMark}</div>
+                    </div>
                 </div>
             </div>
         </c:forEach>
@@ -67,5 +74,4 @@
     <jsp:include page="footer.jsp"></jsp:include>
 </div>
 </body>
-
 </html>

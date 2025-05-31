@@ -1,16 +1,16 @@
-.body{
-    width: 100%;
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f6fa;
     min-height: 100vh;
-    padding: 68px 85px;
-    background-color: #EDEBEB;
     display: flex;
-    justify-content: center;
-    align-items: center;
+    flex-direction: column;
 }
-.container{
-    background-color: #FFFFFF;
-    width: 1350px;
-    min-height: 600px;
-    border-radius: 50px;
-    padding: 25px 83px;
+
+.container {
+    width: 100%;
+    margin: 0 auto;
+    min-height: 100vh;
+    display: flex;
+    flex-flow: column;
+    justify-content: space-between;
 }

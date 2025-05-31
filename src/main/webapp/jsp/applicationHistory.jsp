@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 
 <head>
     <meta charset="UTF-8">
@@ -44,13 +44,17 @@
         <c:forEach var="application" items="${applications}">
             <div class="info-block" style="height: 350px;">
                 <h1 class="info-block-header">${application.speciality.department.faculty.university.shortName}/${application.speciality.department.faculty.shortName}/${application.speciality.department.shortName}/${application.speciality.shortName}</h1>
+                <p class="info-block-text"><spring:message code="application.priority" /> ${application.priority}</p>
                 <p class="info-block-text"><spring:message code="application.maths" /> ${application.mathsMark}</p>
                 <p class="info-block-text"><spring:message code="application.english" /> ${application.englishMark}</p>
-                <p class="info-block-text"><spring:message code="application.physics" /> ${application.physicsMark}</p>
+                <p class="info-block-text"><spring:message code="application.ukrainian" /> ${application.ukrainianMark}</p>
                 <p class="info-block-text"><spring:message code="application.certificate" /> ${application.certificateMark}</p>
                 <p class="info-block-text"><spring:message code="application.rating" /> ${application.ratingMark}</p>
                 <p class="info-block-text"><spring:message code="application.status" /> ${application.status}</p>
-                <a class="info-block-delete-button" href="/deleteApplication?application_id=${application.id}"><spring:message code="infoBlock.delete-button" /></a>
+                <div class="info-block-div">
+                    <a class="info-block-rating-button" href="/listOfApplicants?speciality_id=${application.speciality.id}"><spring:message code="infoBlock.rating-button" /></a>
+                    <a class="info-block-delete-button" href="/deleteApplication?application_id=${application.id}"><spring:message code="infoBlock.delete-button" /></a>
+                </div>
             </div>
         </c:forEach>
     </main>

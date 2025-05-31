@@ -1,90 +1,134 @@
-@import url("reset.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+@import url("main.css");
 @import url("header.css");
 @import url("footer.css");
-@import url("main.css");
+@import url("reset.css");
 
-.main{
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f6fa;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
     width: 100%;
-    min-height: 390px;
-    display: flex;
-    margin: 40px 30px;
-    flex-flow: row wrap;
+    margin: 0 auto;
 }
-.info-block{
-    width: 30%;
-    height: 250px;
-    padding: 20px;
-    display: flex;
-    flex-flow: column nowrap;
-    justify-content: space-around;
+
+
+/* MAIN */
+.main {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 40px 20px; /* Adds padding around the main content */
+    flex-grow: 1;
+}
+
+.info-block {
     background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border: 2px solid #DCFDFF;
-    margin-bottom: 35px;
-    margin-right: 35px;
+    border-radius: 16px;
+    padding: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
-.info-block-header{
-    font-family: 'Itim';
-    font-size: 25px;
-    color: black;
-    text-align: center;
-    align-self: center;
+
+.info-block:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
-.info-block-text{
-    font-family: 'Itim';
+
+.info-block-header {
     font-size: 20px;
-    color: black;
-}
-.info-block-text span{
-    font-weight: bold;
-}
-.website-link{
-    color: #007bff;
-    text-decoration: none;
-}
-.website-link:hover{
-    text-decoration: underline;
-}
-.info-block-details{
-    display: block;
-    width: 50%;
-    height: 40px;
-    border-radius: 10px;
-    color: black;
-    font-family: 'Itim';
-    font-size: 20px;
-    text-decoration: none;
-    background-color: #DCFDFF;
-    border: none;
-    transition: 0.5s background-color;
-    align-self: center;
-    align-content: center;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 16px;
     text-align: center;
 }
-.info-block-details:hover{
-    background-color: rgb(8, 8, 135);
-    color: white;
+
+.info-block-text {
+    font-size: 15px;
+    color: #34495e;
+    margin: 4px 0;
+}
+
+.info-block-div {
+    width: 100%;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-around;
+}
+
+.info-block-delete-button, .info-block-rating-button {
+    font-size: 15px;
+    padding: 15px;
+    margin: 4px 0;
+    text-decoration: none;
+    align-self: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
     cursor: pointer;
-    text-decoration: underline;
+    border-radius: 16px;
 }
-.info-block-delete-button{
-    display: block;
-    width: 50%;
-    height: 40px;
-    align-self: center;
-    align-content: center;
-    text-align: center;
-    background-color: #F00;
-    border-radius: 10px;
-    color: black;
-    font-family: 'Itim';
-    font-size: 20px;
+
+.info-block-rating-button {
+    background-color: #0077b6;
+    color: #ffffff;
+}
+
+.info-block-delete-button {
+    font-size: 15px;
+    padding: 15px;
+    background-color: #e63946;
+    color: #ffffff;
+    margin: 4px 0;
     text-decoration: none;
+    align-self: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
     cursor: pointer;
+    border-radius: 16px;
 }
-.info-block-delete-button:hover{
-    background-color: #850000;
-    color: white;
+
+.info-block-rating-button:hover {
+    background-color: #023e8a;
+}
+
+.info-block-delete-button:hover {
+    background-color: #a4161a;
+}
+
+.info-block-text span {
+    font-weight: 600;
+    color: #1a1a1a;
+}
+
+.website-link {
+    color: #2c7be5;
+    text-decoration: none;
+}
+
+.website-link:hover {
     text-decoration: underline;
 }
+
+.info-block-details {
+    margin-top: 16px;
+    display: inline-block;
+    padding: 10px;
+    text-align: center;
+    background-color: #2c7be5;
+    color: white;
+    border-radius: 10px;
+    font-weight: 600;
+    transition: background-color 0.3s ease;
+    text-decoration: none;
+}
+
+.info-block-details:hover {
+    background-color: #1a5fd1;
+}
+

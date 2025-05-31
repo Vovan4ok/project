@@ -5,7 +5,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 
 <head>
     <meta charset="UTF-8">
@@ -81,7 +81,7 @@
             <p><span><spring:message code="speciality.curriculum" /></span> ${speciality.curriculum}</p>
             <p><span><spring:message code="speciality.pricePerYear" /></span> ${speciality.pricePerYear}</p>
             <p><span><spring:message code="speciality.mathsCoef" /></span> ${speciality.mathsCoef}</p>
-            <p><span><spring:message code="speciality.physicsCoef" /></span> ${speciality.physicsCoef}</p>
+            <p><span><spring:message code="speciality.ukrainianCoef" /></span> ${speciality.ukrainianCoef}</p>
             <p><span><spring:message code="speciality.englishCoef" /></span> ${speciality.englishCoef}</p>
             <p><span><spring:message code="speciality.certificateCoef" /></span> ${speciality.certificateCoef}</p>
             <p>${speciality.description}</p>

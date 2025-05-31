@@ -160,11 +160,11 @@ public class ApplicationServiceTests {
 
         application = applications.get(0);
         application.setMathsMark((short) 50);
-        application.setPhysicsMark((short) 50);
+        application.setUkrainianMark((short) 50);
         applicationService.update(application);
 
         assertNotEquals(applicationService.readAll().get(0).getMathsMark(), Short.valueOf( (short) 20));
-        assertNotEquals(applicationService.readAll().get(0).getPhysicsMark(), Short.valueOf( (short) 20));
+        assertNotEquals(applicationService.readAll().get(0).getUkrainianMark(), Short.valueOf( (short) 20));
     }
 
     @Test
@@ -255,8 +255,8 @@ public class ApplicationServiceTests {
     private List<User> getTestApplicants() {
         List<User> users = new ArrayList<>();
 
-        users.add(new User("random1", "random1", "random1", "random1", "random1", Role.ROLE_USER, "random1"));
-        users.add(new User("random2", "random2", "random2", "random2", "random2", Role.ROLE_USER, "random2"));
+        users.add(new User("random1", "random1", "random1", "random1", "random1", Role.ROLE_USER, "random1", "random1"));
+        users.add(new User("random2", "random2", "random2", "random2", "random2", Role.ROLE_USER, "random2", "random2"));
 
         return users;
     }

@@ -62,6 +62,6 @@ public class SpecialityService {
     }
 
     private boolean validateCoefficients(Speciality speciality) {
-        return speciality.getMathsCoef() + speciality.getEnglishCoef() + speciality.getPhysicsCoef() + speciality.getCertificateCoef() == 1;
+        return speciality.getMathsCoef() + speciality.getEnglishCoef() + speciality.getUkrainianCoef() + speciality.getCertificateCoef() == 1;
     }
 }

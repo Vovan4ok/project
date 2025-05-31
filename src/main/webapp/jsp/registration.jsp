@@ -4,13 +4,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/registration.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/login.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/i18n.js"></script>
@@ -35,7 +35,6 @@
                 <input name="patronimic" type="text" id="patronimic" class="main-form-block-input" placeholder="<spring:message code="form.patronimic-input"/>" required>
             </div>
             <div class="main-form-block">
-                <span class="main-form-block-label" style="color: red;">${msg}</span>
                 <label for="email" class="main-form-block-label"><spring:message code="form.email-label"/></label>
                 <input name="email" type="email" id="email" class="main-form-block-input" placeholder="<spring:message code="form.email-input"/>" required>
             </div>
@@ -44,7 +43,17 @@
                 <input name="password" type="password" id="password" class="main-form-block-input"
                        placeholder="<spring:message code="form.password-input"/>" required>
             </div>
-            <input name="imageFile" id="imageFile" style="margin-top: 15px; margin-right: 65px;" type="file" required>
+            <div class="main-form-block">
+                <label for="imageFile" class="main-form-block-label"><spring:message code="form.avatar-label"/></label>
+                <input name="imageFile" id="imageFile" class="main-form-block-file-input" type="file" required>
+            </div>
+            <div class="main-form-block">
+                <label for="marksFile" class="main-form-block-label"><spring:message code="form.marks-label"/></label>
+                <input name="marksFile" id="marksFile" class="main-form-block-file-input" type="file" required>
+            </div>
+            <div class="main-form-block">
+                <span class="main-form-block-label" style="color: red; align-self: center; margin-top: 20px;">${msg}</span>
+            </div>
             <div class="main-form-submit-block">
                 <input class="main-form-submit-block-button" type="submit" value="<spring:message code="registration.submit-button"/>">
                 <span class="main-form-submit-block-span">

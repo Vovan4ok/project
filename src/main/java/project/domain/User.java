@@ -41,6 +41,9 @@ public class User {
     @Column(name="image_url")
     private String imageUrl;
 
+    @Column(name="marks_url")
+    private String marksUrl;
+
     public User(User user) {
         this.id = user.id;
         this.email = user.email;
@@ -51,7 +54,7 @@ public class User {
         this.role = user.role;
     }
 
-    public User(String email, String password, String name, String surname, String patronimic, Role role, String imageUrl) {
+    public User(String email, String password, String name, String surname, String patronimic, Role role, String imageUrl, String marksUrl) {
         this.email = email;
         this.password = password;
         this.name = name;
@@ -59,5 +62,6 @@ public class User {
         this.patronimic = patronimic;
         this.role = role;
         this.imageUrl = imageUrl;
+        this.marksUrl = marksUrl;
     }
 }

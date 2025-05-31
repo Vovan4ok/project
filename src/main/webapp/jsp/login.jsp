@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 
 <head>
     <meta charset="UTF-8">
@@ -37,8 +37,8 @@
                         <spring:message code="login.dont-have-account"/> <a href="/registration" class="main-form-submit-block-span-link"><spring:message code="login.registration-link"/></a>
                 </span>
             </div>
-            <span class="main-form-block-label" style="color: red;">${message}</span>
-            <span class="main-form-block-label" style="color: red;">${error}</span>
+            <span class="main-form-block-label" style="color: red; align-self: center;margin-top: 20px;">${message}</span>
+            <span class="main-form-block-label" style="color: red; align-self: center;margin-top: 20px;">${error}</span>
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
         </form:form>
     </main>

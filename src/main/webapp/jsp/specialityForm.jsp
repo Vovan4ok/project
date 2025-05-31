@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 
 <head>
     <meta charset="UTF-8">
@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/i18n.js"></script>
+    <script>
+        const allFaculties = ${facultiesJson};
+        const allDepartments = ${departmentsJson};
+    </script>
 </head>
 
 <body class="body">
@@ -63,10 +67,26 @@
                 <textarea name="description" id="description" required class="main-form-block-input" style="height: 200px;" placeholder="<spring:message code="form.speciality-description-input" />"><c:if test="${mode == 'MODE_UPDATE'}">${specialityForm.description}</c:if></textarea>
             </div>
             <div class="main-form-block">
+                <label for="universityId" class="main-form-block-label"><spring:message code="form.university-label"/></label>
+                <select class="main-form-block-input select" required id="universityId" name="universityId">
+                    <c:forEach var="university" items="${universities}">
+                        <option <c:if test="${mode == 'MODE_UPDATE' && specialityForm.department.faculty.university.id == university.id}">selected</c:if> value="${university.id}">${university.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="main-form-block">
+                <label for="facultyId" class="main-form-block-label"><spring:message code="form.faculty-label"/></label>
+                <select class="main-form-block-input select" required id="facultyId" name="facultyId">
+                    <c:forEach var="faculty" items="${faculties}">
+                        <option <c:if test="${mode == 'MODE_UPDATE' && specialityForm.department.faculty.id == faculty.id}">selected</c:if> value="${faculty.id}">${faculty.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="main-form-block">
                 <label for="departmentId" class="main-form-block-label"><spring:message code="form.department-label"/></label>
                 <select class="main-form-block-input select" required id="departmentId" name="departmentId">
                     <c:forEach var="department" items="${departments}">
-                        <option <c:if test="${mode == 'MODE_UPDATE' && specialityForm.department.id == department.id}">selected</c:if> value="${department.id}">${department.faculty.university.shortName}/${department.faculty.shortName}/${department.shortName}</option>
+                        <option <c:if test="${mode == 'MODE_UPDATE' && specialityForm.department.id == department.id}">selected</c:if> value="${department.id}">${department.name}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -107,8 +127,8 @@
                 <input name="mathsCoef" id="mathsCoef" step="0.1" required type="number" class="main-form-block-input" placeholder="<spring:message code="form.speciality-mathsCoef-input" />" min="0" max="1" <c:if test="${mode == 'MODE_UPDATE'}">value="${specialityForm.mathsCoef}"</c:if>>
             </div>
             <div class="main-form-block">
-                <label for="physicsCoef" class="main-form-block-label"><spring:message code="form.speciality-physicsCoef-label" /></label>
-                <input name="physicsCoef" id="physicsCoef" step="0.1" required type="number" class="main-form-block-input" placeholder="<spring:message code="form.speciality-physicsCoef-input" />" min="0" max="1" <c:if test="${mode == 'MODE_UPDATE'}">value="${specialityForm.physicsCoef}"</c:if>>
+                <label for="ukrainianCoef" class="main-form-block-label"><spring:message code="form.speciality-ukrainianCoef-label" /></label>
+                <input name="ukrainianCoef" id="ukrainianCoef" step="0.1" required type="number" class="main-form-block-input" placeholder="<spring:message code="form.speciality-ukrainianCoef-input" />" min="0" max="1" <c:if test="${mode == 'MODE_UPDATE'}">value="${specialityForm.ukrainianCoef}"</c:if>>
             </div>
             <div class="main-form-block">
                 <label for="englishCoef" class="main-form-block-label"><spring:message code="form.speciality-englishCoef-label" /></label>
@@ -122,6 +142,47 @@
                 <input class="main-form-submit-block-button" required type="submit" value="<spring:message code="addFaculty.button" />">
             </div>
         </form:form>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const universitySelect = document.getElementById("universityId");
+                const facultySelect = document.getElementById("facultyId");
+                const departmentSelect = document.getElementById("departmentId");
+
+                function populateSelect(selectElement, items, valueField, textCallback, selectedId) {
+                    selectElement.innerHTML = "";
+                    for (const item of items) {
+                        const option = document.createElement("option");
+                        option.value = item[valueField];
+                        option.textContent = typeof textCallback === "function" ? textCallback(item) : item[textCallback];
+                        if (selectedId && selectedId === item[valueField]) {
+                            option.selected = true;
+                        }
+                        selectElement.appendChild(option);
+                    }
+                }
+
+                universitySelect.addEventListener("change", function () {
+                    const selectedUniversityId = parseInt(this.value);
+                    const faculties = allFaculties.filter(f => f.university.id === selectedUniversityId);
+                    populateSelect(facultySelect, faculties, "id", "name");
+
+                    facultySelect.dispatchEvent(new Event("change"));
+                });
+
+                facultySelect.addEventListener("change", function () {
+                    const selectedFacultyId = parseInt(this.value);
+                    const departments = allDepartments.filter(d => d.faculty.id === selectedFacultyId);
+                    populateSelect(departmentSelect, departments, "id", "name");
+
+                    departmentSelect.dispatchEvent(new Event("change"));
+                });
+
+                // Автоматично ініціалізуємо селекти, якщо вже щось обрано
+                if (universitySelect.value) {
+                    universitySelect.dispatchEvent(new Event("change"));
+                }
+            });
+        </script>
     </main>
     <jsp:include page="footer.jsp"></jsp:include>
 </div>

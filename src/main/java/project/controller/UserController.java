@@ -44,18 +44,29 @@ public class UserController {
             @RequestParam("password") String password,
             @RequestParam("patronimic") String patronimic,
             @RequestParam("imageFile") MultipartFile image,
+            @RequestParam("marksFile") MultipartFile marks,
             HttpServletRequest request) throws IOException {
         logger.info("User is trying to register");
-        User userForm = UserDTOHelper.createUser(name, surname, patronimic, email, password, image.getOriginalFilename());
-        if(userService.save(userForm)) {
-            user = userService.getUserByEmail(userForm.getEmail());
-            saveImage(image);
-            logger.info("Redirecting to the home page.");
-            return "redirect:/home";
+        if(marks.getOriginalFilename().endsWith(".pdf"))
+        {
+            User userForm = UserDTOHelper.createUser(name, surname, patronimic, email, password, image.getOriginalFilename(), marks.getOriginalFilename());
+            if(userService.save(userForm)) {
+                user = userService.getUserByEmail(userForm.getEmail());
+                saveFile(image, "src/main/webapp/images/avatars/");
+                saveFile(marks, "src/main/webapp/marksFiles/");
+                logger.info("Redirecting to the home page.");
+                return "redirect:/home";
+            }
+            request.setAttribute("msg", "Юзер з даним мейлом вже існує!");
+            logger.info("Registration wasn't successful.");
+            return "registration";
         }
-        request.setAttribute("msg", "This email already exists!");
-        logger.info("Registration wasn't successful.");
-        return "registration";
+        else
+        {
+            request.setAttribute("msg", "Файл має бути з роширенням .pdf!");
+            logger.info("Registration wasn't successful.");
+            return "registration";
+        }
     }
 
     @GetMapping(value={"/", "login"})
@@ -91,10 +102,10 @@ public class UserController {
         return "addMenu";
     }
 
-    public void saveImage(MultipartFile file) throws IOException {
-        String folder = "src/main/webapp/images/avatars/";
+    public void saveFile(MultipartFile file, String folder) throws IOException {
         byte[] bytes = file.getBytes();
         Path path = Paths.get(folder + file.getOriginalFilename());
         Files.write(path, bytes);
     }
+
 }

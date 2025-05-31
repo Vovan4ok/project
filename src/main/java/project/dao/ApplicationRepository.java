@@ -18,4 +18,6 @@ public interface ApplicationRepository extends JpaRepository<Application, Intege
     List<Application> readAllByApplicant(User user);
 
     boolean existsByApplicantAndSpeciality(User applicant, Speciality speciality);
+
+    boolean existsByApplicantAndPriority(User applicant, Short priority);
 }

@@ -3,7 +3,7 @@ package project.dto;
 import project.domain.User;
 
 public class UserDTOHelper {
-    public static User createUser(String name, String surname, String patronimic, String email, String password, String imageName) {
+    public static User createUser(String name, String surname, String patronimic, String email, String password, String imageName, String marksName) {
         User user = new User();
         user.setName(name);
         user.setSurname(surname);
@@ -11,6 +11,7 @@ public class UserDTOHelper {
         user.setEmail(email);
         user.setPassword(password);
         user.setImageUrl(imageName);
+        user.setMarksUrl(marksName);
         return user;
     }
 }

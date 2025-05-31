@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 
 <head>
     <meta charset="UTF-8">
@@ -84,10 +84,10 @@
                 <c:forEach var="application" items="${applications}">
                     <div class="info-block" style="height: 350px;">
                         <h1 class="info-block-header">${application.speciality.department.faculty.university.shortName}/${application.speciality.department.faculty.shortName}/${application.speciality.department.shortName}/${application.speciality.shortName}</h1>
-                        <p class="info-block-text"><spring:message code="application.applicant" />${application.applicant.surname} ${application.applicant.name} ${application.applicant.patronimic}</p>
+                        <p class="info-block-text"><spring:message code="application.applicant" /> ${application.applicant.surname} ${application.applicant.name} ${application.applicant.patronimic}</p>
                         <p class="info-block-text"><spring:message code="application.maths" /> ${application.mathsMark}</p>
                         <p class="info-block-text"><spring:message code="application.english" /> ${application.englishMark}</p>
-                        <p class="info-block-text"><spring:message code="application.physics" /> ${application.physicsMark}</p>
+                        <p class="info-block-text"><spring:message code="application.ukrainian" /> ${application.ukrainianMark}</p>
                         <p class="info-block-text"><spring:message code="application.certificate" /> ${application.certificateMark}</p>
                         <p class="info-block-text"><spring:message code="application.rating" /> ${application.ratingMark}</p>
                         <div class="info-block-buttons">

@@ -1,5 +1,6 @@
 package project.controller;
 
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +11,9 @@ import project.domain.Faculty;
 import project.domain.Speciality;
 import project.domain.User;
 import project.service.DepartmentService;
+import project.service.FacultyService;
 import project.service.SpecialityService;
+import project.service.UniversityService;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -22,6 +25,12 @@ public class SpecialityController {
 
     @Autowired
     DepartmentService departmentService;
+
+    @Autowired
+    FacultyService facultyService;
+
+    @Autowired
+    UniversityService universityService;
 
     Logger logger = LoggerFactory.getLogger(SpecialityController.class);
 
@@ -46,7 +55,12 @@ public class SpecialityController {
     public String addSpeciality(HttpServletRequest request) {
         logger.info("Admin is on the addSpeciality page.");
         request.setAttribute("specialityForm", new Speciality());
+        request.setAttribute("universities", universityService.readAll());
+        request.setAttribute("faculties", facultyService.readAll());
         request.setAttribute("departments", departmentService.readAll());
+        Gson gson = new Gson();
+        request.setAttribute("facultiesJson", gson.toJson(facultyService.readAll()));
+        request.setAttribute("departmentsJson", gson.toJson(departmentService.readAll()));
         request.setAttribute("mode", "MODE_ADD");
         return "specialityForm";
     }
@@ -72,7 +86,12 @@ public class SpecialityController {
     public String updateSpeciality(@RequestParam Integer id, HttpServletRequest request) {
         logger.info("Admin is on the update page.");
         request.setAttribute("specialityForm", specialityService.readById(id));
+        request.setAttribute("universities", universityService.readAll());
+        request.setAttribute("faculties", facultyService.readAll());
         request.setAttribute("departments", departmentService.readAll());
+        Gson gson = new Gson();
+        request.setAttribute("facultiesJson", gson.toJson(facultyService.readAll()));
+        request.setAttribute("departmentsJson", gson.toJson(departmentService.readAll()));
         request.setAttribute("mode", "MODE_UPDATE");
         return "specialityForm";
     }

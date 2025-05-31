@@ -20,7 +20,7 @@ public class ApplicationService {
     }
 
     public boolean save(Application application, User user) {
-        if(applicationRepository.existsByApplicantAndSpeciality(user, application.getSpeciality())) {
+        if(applicationRepository.existsByApplicantAndSpeciality(user, application.getSpeciality()) || applicationRepository.existsByApplicantAndPriority(user, application.getPriority())) {
             return false;
         }
         application.setApplicant(user);

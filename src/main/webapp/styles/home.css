@@ -1,72 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 @import url("reset.css");
 @import url("header.css");
 @import url("footer.css");
 @import url("main.css");
 
-.user-main{
+.user-main {
     width: 100%;
-    height: fit-content;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
+    padding: 40px 20px;
+    gap: 2rem;
+    background-color: #f7f9fc;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
 }
-.user-main-image{
-    width: 300px;
-    height: 300px;
+
+.user-main-image {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-.user-main-text{
-    width: 785px;
-    height: fit-content;
-    color: #000;
-    font-family: 'Itim';
-    font-size: 20px;
+
+.user-main-text {
+    max-width: 800px;
+    color: #2c3e50;
+    font-size: 1.25rem;
+    line-height: 1.6;
+    text-align: justify;
+    padding: 1rem;
+    background-color: #ffffff;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
 }
-.admin-header-logo-block{
-    width: 350px;
+
+.admin-header-logo-block {
+    width: auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
-.main{
+
+.main {
     width: 100%;
-    min-height: 390px;
-    margin: 40px 0;
+    padding: 3rem 1rem;
+    background-color: #eef3f8;
+    border-radius: 1rem;
 }
-.main-heading{
-    width: fit-content;
-    color: #000;
-    font-family: 'Itim';
-    font-size: 30px;
-    margin: 0 auto;
+
+.main-heading {
+    font-size: 2rem;
+    color: #34495e;
+    margin: 0 auto 2rem auto;
+    text-align: center;
+    border-bottom: 2px solid #1abc9c;
+    display: inline-block;
+    padding-bottom: 0.5rem;
 }
+
 .info-block-buttons {
     width: 100%;
     display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-around;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
 }
+
 .edit-button, .delete-button {
-    width: 120px;
-    height: 30px;
-    font-size: 15px;
-    border-radius: 5px;
-    font-family: 'Itim';
-    cursor: pointer;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
     border: none;
-    transition: 0.5s background-color;
+    border-radius: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    color: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-.edit-button{
-    background-color: #52c248;
-    align-self: start;
+
+.edit-button {
+    background-color: #27ae60;
 }
-.delete-button{
-    background-color: #F00;
-    align-self: end;
+
+.delete-button {
+    background-color: #e74c3c;
 }
-.edit-button:hover{
-    background-color: #284f0a;
-    color: white;
-    text-decoration: underline;
+
+.edit-button:hover {
+    background-color: #1e8449;
+    color: #ffffff;
+    text-decoration: none;
 }
-.delete-button:hover{
-    background-color: #850000;
-    color: white;
-    text-decoration: underline;
+
+.delete-button:hover {
+    background-color: #c0392b;
+    color: #ffffff;
+    text-decoration: none;
 }

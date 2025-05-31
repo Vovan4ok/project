@@ -2,59 +2,116 @@
 @import url("header.css");
 @import url("footer.css");
 @import url("main.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-.main{
-    width: 100%;
-    min-height: 390px;
-    margin: 40px 0;
-    display: flex;
-    flex-flow: column nowrap;
+body {
+ font-family: 'Inter', sans-serif
+}
+
+.container {
     align-items: center;
 }
-.main-heading{
-    color: #000;
-    font-family: 'Itim';
-    font-size: 25px;
-}
-.info-block {
+
+.main {
+    padding: 40px 20px;
     width: 80%;
-    height: 150px;
-    padding: 15px;
-    margin-top: 20px;
-    background-color: #ffffff;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    border: 2px solid #DCFDFF;
+}
+
+.main-heading {
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.applicant-card {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.applicant-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.card-header {
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: start;
-}
-.info-block-place{
-    font-family: 'Itim';
-    font-size: 20px;
-    font-weight: bold;
-}
-.info-block-text{
-    font-family: 'Itim';
-    font-size: 20px;
-    color: black;
-}
-.info-block-text span{
-    font-weight: bold;
-}
-.info-block-marks{
-    height: 100%;
-    width: 600px;
-    display: flex;
-    flex-flow: column nowrap;
     justify-content: space-between;
-    margin-left: 50px;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 15px;
 }
-.info-block-rating{
+
+.place {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.name {
+    flex: 1;
+    text-align: center;
+    font-size: 1.2rem;
+    color: #222;
+}
+
+.status {
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 5px 12px;
+    border-radius: 8px;
+    text-transform: uppercase;
+}
+
+.status.budget {
+    background-color: #e7f7e1;
+    color: #3c763d;
+}
+
+.status.contract {
+    background-color: #fffacc;
+    color: #8a6d3b;
+}
+
+.status.miss {
+    background-color: #ffe0e0;
+    color: #a94442;
+}
+
+.card-body {
     display: flex;
-    flex-flow: column nowrap;
-    align-items: end;
-    justify-content: space-around;
-    margin-left: 65px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.marks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    flex: 1;
+}
+
+.marks div {
+    background-color: #f1f1f1;
+    border-radius: 6px;
+    padding: 10px;
+    font-size: 0.95rem;
+}
+
+.marks span {
+    font-weight: bold;
+    margin-right: 5px;
+}
+
+.rating {
+    min-width: 140px;
+    font-size: 1.1rem;
+    text-align: right;
+    align-self: flex-end;
+    color: #333;
 }

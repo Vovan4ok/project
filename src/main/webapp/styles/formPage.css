@@ -2,86 +2,138 @@
 @import url("header.css");
 @import url("footer.css");
 @import url("main.css");
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-.admin-header-logo-block{
+/* Змінні теми */
+:root {
+    --primary-bg: #f2f7fb;
+    --form-bg: #ffffff;
+    --accent-color: #0077b6;
+    --accent-hover: #023e8a;
+    --input-bg: #eaf4f9;
+    --text-main: #1d3557;
+    --text-light: #6c757d;
+    --border-radius: 16px;
+    --font-family: 'Inter', sans-serif;
+}
+
+.admin-header-logo-block {
     width: 350px;
 }
-.main{
+
+.main {
     width: 100%;
     min-height: 390px;
-    margin: 40px auto;
+    margin: 0 auto;
     display: flex;
-    flex-flow: column nowrap;
+    flex-direction: column;
     align-items: center;
+    padding: 40px 20px;
+    background-color: var(--primary-bg);
+    border-radius: var(--border-radius);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
-.main-heading{
-    color: #000;
-    font-family: 'Itim';
-    font-size: 25px;
+
+.main-heading {
+    font-size: 28px;
+    font-family: var(--font-family);
+    color: var(--text-main);
+    font-weight: 600;
+    margin-bottom: 20px;
+    text-align: center;
 }
-.main-form{
-    width: fit-content;
+
+.main-form {
+    background-color: var(--form-bg);
+    padding: 30px 40px;
+    border-radius: var(--border-radius);
     display: flex;
-    flex-flow: column nowrap;
-    align-items: end;
+    flex-direction: column;
+    align-items: flex-end;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    max-width: 900px;
+    width: 100%;
 }
-.main-form-block{
+
+.main-form-block {
+    width: 100%;
     display: flex;
-    flex-flow: row nowrap;
+    flex-direction: row;
+    align-items: center;
     margin-top: 20px;
-    align-items: center;
 }
-.main-form-block-label{
-    color: #000;
-    font-family: 'Itim';
-    font-size: 25px;
-    margin-right: 25px;
+
+/* Встановлюємо однакову ширину для всіх label і вирівнюємо текст зліва */
+.main-form-block-label {
+    font-family: var(--font-family);
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--text-main);
+    margin-right: 20px;
+    width: 160px; /* Фіксована ширина */
+    text-align: left; /* Вирівнювання по лівій стороні */
 }
-.main-form-block-input{
-    width: 302px;
+
+/* Інпут займає всю решту простору */
+.main-form-block-input {
+    width: 100%;
     height: 40px;
-    border-radius: 15px;
-    background-color: #EDEBEB;
-    padding: 8px 17px;
-    font-size: 20px;
-    font-family: 'Itim';
-    border: none;
-    color: black;
+    padding: 5px 15px;
+    font-family: var(--font-family);
+    font-size: 16px;
+    background-color: var(--input-bg);
+    border: 1px solid #d0dfe7;
+    border-radius: var(--border-radius);
+    color: var(--text-main);
+    transition: border-color 0.3s;
+    box-sizing: border-box;
 }
-.main-form-submit-block{
-    margin-top: 28px;
-    width: 265px;
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    align-items: center;
+
+.main-form-block-input:focus {
+    border-color: var(--accent-color);
+    outline: none;
 }
-.main-form-submit-block-button{
-    width: 180px;
-    height: 40px;
-    border-radius: 10px;
-    background-color: #DCFDFF;
-    color: black;
-    font-family: 'Itim';
-    font-size: 20px;
+
+.main-form-submit-block {
+    width: 100%;
+    margin-top: 30px;
     display: flex;
+    justify-content: space-around;
     align-items: center;
-    justify-content: center;
-    border: none;
-    transition: 0.5s background-color;
     align-self: center;
+    gap: 30px;
 }
-.main-form-submit-block-button:hover{
-    color: #FFFFFF;
-    background-color: rgb(8, 8, 135);
+
+.main-form-submit-block-button {
+    background-color: var(--accent-color);
+    color: white;
+    font-family: var(--font-family);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 10px 24px;
+    border: none;
+    border-radius: var(--border-radius);
+    transition: background-color 0.3s ease;
     cursor: pointer;
 }
-.main-form-submit-block-span{
-    color: #9F9D9D;
-    font-family: 'Itim';
-    font-size: 13px;
-    margin-left: 15px;
+
+.main-form-submit-block-button:hover {
+    background-color: var(--accent-hover);
 }
-.main-form-submit-block-span-link{
-    color: black;
+
+.main-form-submit-block-span {
+    font-family: var(--font-family);
+    font-size: 13px;
+    color: var(--text-light);
+    margin-left: 15px;
+    width: 200px;
+}
+
+.main-form-submit-block-span-link {
+    color: var(--accent-color);
+    text-decoration: none;
+}
+
+.main-form-submit-block-span-link:hover {
+    text-decoration: underline;
 }

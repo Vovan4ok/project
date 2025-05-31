@@ -1,5 +1,6 @@
 package project.controller;
 
+import com.google.gson.Gson;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import project.domain.Department;
 import project.domain.User;
 import project.service.DepartmentService;
 import project.service.FacultyService;
+import project.service.UniversityService;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,6 +22,9 @@ public class DepartmentController {
 
     @Autowired
     FacultyService facultyService;
+
+    @Autowired
+    UniversityService universityService;
 
     Logger logger = LoggerFactory.getLogger(DepartmentController.class);
 
@@ -43,7 +48,10 @@ public class DepartmentController {
     public String addDepartment(HttpServletRequest request) {
         logger.info("Admin is on the addDepartment page.");
         request.setAttribute("departmentForm", new Department());
+        request.setAttribute("universities", universityService.readAll());
         request.setAttribute("faculties", facultyService.readAll());
+        Gson gson = new Gson();
+        request.setAttribute("facultiesJson", gson.toJson(facultyService.readAll()));
         request.setAttribute("mode", "MODE_ADD");
         return "departmentForm";
     }

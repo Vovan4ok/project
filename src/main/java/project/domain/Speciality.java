@@ -61,8 +61,8 @@ public class Speciality {
     @Column(name="maths_coef")
     private Float mathsCoef;
 
-    @Column(name="physics_coef")
-    private Float physicsCoef;
+    @Column(name="ukrainian_coef")
+    private Float ukrainianCoef;
 
     @Column(name="english_coef")
     private Float englishCoef;
@@ -71,11 +71,11 @@ public class Speciality {
     private Float certificateCoef;
 
 
-    public Speciality(String name, String shortName, Float mathsCoef, Float physicsCoef, Float  englishCoef, Float certificateCoef) {
+    public Speciality(String name, String shortName, Float mathsCoef, Float ukrainianCoef, Float  englishCoef, Float certificateCoef) {
         this.name = name;
         this.shortName = shortName;
         this.mathsCoef = mathsCoef;
-        this.physicsCoef = physicsCoef;
+        this.ukrainianCoef = ukrainianCoef;
         this.englishCoef = englishCoef;
         this.certificateCoef = certificateCoef;
     }

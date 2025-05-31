@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="uk">
 
 <head>
     <meta charset="UTF-8">
@@ -15,6 +15,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
     <script src="${pageContext.request.contextPath}/js/i18n.js"></script>
+    <script>
+        const allFaculties = ${facultiesJson};
+    </script>
 </head>
 
 <body class="body">
@@ -75,10 +78,18 @@
                 <textarea name="description" id="description" required class="main-form-block-input" style="height: 200px;" placeholder="<spring:message code="form.faculty-description-input" />"><c:if test="${mode == 'MODE_UPDATE'}">${departmentForm.description}</c:if></textarea>
             </div>
             <div class="main-form-block">
+                <label for="universityId" class="main-form-block-label"><spring:message code="form.university-label"/></label>
+                <select class="main-form-block-input select" required id="universityId" name="universityId">
+                    <c:forEach var="university" items="${universities}">
+                        <option <c:if test="${mode == 'MODE_UPDATE' && departmentForm.faculty.university.id == university.id}">selected</c:if> value="${university.id}">${university.name}</option>
+                    </c:forEach>
+                </select>
+            </div>
+            <div class="main-form-block">
                 <label for="facultyId" class="main-form-block-label"><spring:message code="form.faculty-label"/></label>
                 <select class="main-form-block-input select" required id="facultyId" name="facultyId">
                     <c:forEach var="faculty" items="${faculties}">
-                        <option <c:if test="${mode == 'MODE_UPDATE' && departmentForm.faculty.id == faculty.id}">selected</c:if> value="${faculty.id}">${faculty.university.shortName}/${faculty.shortName}</option>
+                        <option <c:if test="${mode == 'MODE_UPDATE' && departmentForm.faculty.id == faculty.id}">selected</c:if> value="${faculty.id}">${faculty.name}</option>
                     </c:forEach>
                 </select>
             </div>
@@ -86,6 +97,38 @@
                 <input class="main-form-submit-block-button" required type="submit" value="<spring:message code="addFaculty.button" />">
             </div>
         </form:form>
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const universitySelect = document.getElementById("universityId");
+                const facultySelect = document.getElementById("facultyId");
+
+                function populateSelect(selectElement, items, valueField, textCallback, selectedId) {
+                    selectElement.innerHTML = "";
+                    for (const item of items) {
+                        const option = document.createElement("option");
+                        option.value = item[valueField];
+                        option.textContent = typeof textCallback === "function" ? textCallback(item) : item[textCallback];
+                        if (selectedId && selectedId === item[valueField]) {
+                            option.selected = true;
+                        }
+                        selectElement.appendChild(option);
+                    }
+                }
+
+                universitySelect.addEventListener("change", function () {
+                    const selectedUniversityId = parseInt(this.value);
+                    const faculties = allFaculties.filter(f => f.university.id === selectedUniversityId);
+                    populateSelect(facultySelect, faculties, "id", "name");
+
+                    facultySelect.dispatchEvent(new Event("change"));
+                });
+
+                // Автоматично ініціалізуємо селекти, якщо вже щось обрано
+                if (universitySelect.value) {
+                    universitySelect.dispatchEvent(new Event("change"));
+                }
+            });
+        </script>
     </main>
     <jsp:include page="footer.jsp"></jsp:include>
 </div>
