@@ -10,8 +10,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Main</title>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/home.css">
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/faculties.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/styles/documents.css">
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js" type="text/javascript"></script>
@@ -29,10 +28,10 @@
                     <h1 class="header-heading"><spring:message code="user.header-heading"/></h1>
                 </div>
                 <ul class="header-list">
-                    <li class="header-list-item" style="text-decoration: underline;"><a href="/home" class="header-list-item-link"><spring:message code="user.anchor1"/></a></li>
+                    <li class="header-list-item"><a href="/home" class="header-list-item-link"><spring:message code="user.anchor1"/></a></li>
                     <li class="header-list-item"><a href="/universities" class="header-list-item-link"><spring:message code="user.anchor2"/></a></li>
                     <li class="header-list-item"><a href="/makeApplication" class="header-list-item-link"><spring:message code="user.anchor3"/></a></li>
-                    <li class="header-list-item"><a href="/documents" class="header-list-item-link"><spring:message code="user.anchor4"/></a></li>
+                    <li class="header-list-item" style="text-decoration: underline;"><a href="/documents" class="header-list-item-link"><spring:message code="user.anchor4"/></a></li>
                 </ul>
                 <select id="locales">
                     <option value="en">EN</option>
@@ -74,29 +73,53 @@
 
     <c:choose>
         <c:when test="${role == 'ROLE_USER'}">
-            <main class="user-main">
-                <img src="${pageContext.request.contextPath}/images/knu-photo.jpg" alt="knu-photo" class="user-main-image">
-                <div class="user-main-text">
-                    <spring:message code="home.user-text" />
-                </div>
-            </main>
+            <c:choose>
+                <c:when test="${documentsMode == 'UPLOAD'}">
+                    <main class="upload-main">
+                        <form:form action="documents" class="main-form" method="post" enctype="multipart/form-data">
+                            <div class="main-form-block">
+                                <label for="passport" class="main-form-block-label"><spring:message code="form.passport"/></label>
+                                <input name="passport" id="passport" class="main-form-block-file-input" type="file" required>
+                            </div>
+                            <div class="main-form-block">
+                                <label for="identificationCode" class="main-form-block-label"><spring:message code="form.identification-code"/></label>
+                                <input name="identificationCode" id="identificationCode" class="main-form-block-file-input" type="file" required>
+                            </div>
+                            <div class="main-form-block">
+                                <label for="address" class="main-form-block-label"><spring:message code="form.address"/></label>
+                                <input name="address" id="address" class="main-form-block-file-input" type="file" required>
+                            </div>
+                            <div class="main-form-submit-block">
+                                <input class="main-form-submit-block-button" type="submit" value="<spring:message code="addFaculty.button"/>">
+                            </div>
+                        </form:form>
+                    </main>
+                </c:when>
+                <c:when test="${documentsMode == 'UPLOADED'}">
+                    <main class="uploaded-main">
+                        <c:forEach var="document" items="${documents}">
+                            <div class="info-block">
+                                <p class="info-block-text"><spring:message code="document.type" /> ${document.documentType}</p>
+                                <p class="info-block-text"><spring:message code="application.status" /> ${document.status}</p>
+                                <p class="info-block-text"><a class="website-link" href="${pageContext.request.contextPath}/documents/${user.email}/${document.path}">${document.path}</a></p>
+                            </div>
+                        </c:forEach>
+                    </main>
+                </c:when>
+            </c:choose>
         </c:when>
         <c:when test="${role == 'ROLE_ADMIN'}">
             <main class="main">
-                <c:forEach var="application" items="${applications}">
+                <c:forEach var="document" items="${documents}">
                     <div class="info-block" style="height: 350px;">
-                        <h1 class="info-block-header">${application.speciality.department.faculty.university.shortName}/${application.speciality.department.faculty.shortName}/${application.speciality.department.shortName}/${application.speciality.shortName}</h1>
-                        <p class="info-block-text"><spring:message code="application.applicant" /> ${application.applicant.surname} ${application.applicant.name} ${application.applicant.patronimic}</p>
-                        <p class="info-block-text"><spring:message code="application.maths" /> ${application.mathsMark}</p>
-                        <p class="info-block-text"><spring:message code="application.english" /> ${application.englishMark}</p>
-                        <p class="info-block-text"><spring:message code="application.ukrainian" /> ${application.ukrainianMark}</p>
-                        <p class="info-block-text"><spring:message code="application.certificate" /> ${application.certificateMark}</p>
-                        <p class="info-block-text"><spring:message code="application.rating" /> ${application.ratingMark}</p>
+                        <h1 class="info-block-header">${document.applicant.surname} ${document.applicant.name} ${document.applicant.email}</h1>
+                        <p class="info-block-text"><spring:message code="document.type" /> ${document.documentType}</p>
+                        <p class="info-block-text"><a class="website-link" href="${pageContext.request.contextPath}/documents/${document.applicant.email}/${document.path}">${document.path}</a></p>
                         <div class="info-block-buttons">
-                            <a href="/acceptApplication?id=${application.id}" style="text-decoration: none;">
+                            <a href="/acceptDocument?id=${document.id}" style="text-decoration: none;">
                                 <button class="edit-button"><spring:message code="infoBlock.accept-button" /></button>
                             </a>
-                            <a href="/declineApplication?id=${application.id}" style="text-decoration: none;">
+                            <a href="/declineDocument?id=${document.id}" style="text-decoration: none;">
                                 <button class="delete-button"><spring:message code="infoBlock.decline-button" /></button>
                             </a>
                         </div>

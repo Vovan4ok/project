@@ -27,9 +27,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/home", "/universities", "/faculties", "/departments", "/specialities").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')").
+        http.authorizeRequests().antMatchers("/").permitAll().antMatchers("/home", "/universities", "/faculties", "/departments", "/specialities", "documents").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')").
                 antMatchers( "/makeApplication", "/listOfApplicants", "/applicationHistory").access("hasRole('ROLE_USER')")
-                .antMatchers( "/acceptApplication", "/declineApplication", "/addUniversity", "/updateUniversity", "deleteUniversity", "/addFaculty", "/updateFaculty", "/deleteFaculty", "/addDepartment", "/updateDepartment", "/deleteDepartment", "/addSpeciality", "updateSpeciality", "deleteSpeciality").access("hasRole('ROLE_ADMIN')")
+                .antMatchers( "/acceptApplication", "/declineApplication", "/addUniversity", "/updateUniversity", "deleteUniversity", "/addFaculty", "/updateFaculty", "/deleteFaculty", "/addDepartment", "/updateDepartment", "/deleteDepartment", "/addSpeciality", "updateSpeciality", "deleteSpeciality", "acceptDocument", "declineDocument").access("hasRole('ROLE_ADMIN')")
                 .anyRequest().permitAll().and().formLogin().loginPage("/login").defaultSuccessUrl("/home")
                 .usernameParameter("email").passwordParameter("password").and().logout()
                 .logoutSuccessUrl("/login?logout").and().exceptionHandling().accessDeniedPage("/403").and().csrf();

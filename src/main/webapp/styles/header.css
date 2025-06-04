@@ -35,7 +35,7 @@
 
 .header-list {
     display: flex;
-    gap: 24px;
+    gap: 100px;
     list-style: none;
     padding: 0;
     margin: 12px 0;

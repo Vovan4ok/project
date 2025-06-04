@@ -28,9 +28,10 @@
             <h1 class="header-heading"><spring:message code="admin.header-heading"/></h1>
         </div>
         <ul class="header-list">
-            <li class="header-list-item"><a href="/home" class="header-list-item-link" style="margin-right: 30px;"><spring:message code="admin.anchor1"/></a></li>
-            <li class="header-list-item"><a href="/universities" class="header-list-item-link" style="margin-right: 30px;"><spring:message code="admin.anchor2"/></a></li>
+            <li class="header-list-item"><a href="/home" class="header-list-item-link"><spring:message code="admin.anchor1"/></a></li>
+            <li class="header-list-item"><a href="/universities" class="header-list-item-link"><spring:message code="admin.anchor2"/></a></li>
             <li class="header-list-item"><a href="/addMenu" class="header-list-item-link" style="text-decoration: underline;"><spring:message code="admin.anchor3"/></a></li>
+            <li class="header-list-item"><a href="/documents" class="header-list-item-link"><spring:message code="user.anchor4"/></a></li>
         </ul>
         <select id="locales">
             <option value="en">EN</option>

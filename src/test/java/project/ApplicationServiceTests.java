@@ -243,11 +243,11 @@ public class ApplicationServiceTests {
     private List<Application> getTestData() {
         List<Application> applications = new ArrayList<>();
 
-        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, Status.ACCEPTED));
-        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, Status.ACCEPTED));
-        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, Status.ACCEPTED));
-        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, Status.ACCEPTED));
-        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, Status.ACCEPTED));
+        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, (short) 1, Status.ACCEPTED));
+        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, (short) 2,  Status.ACCEPTED));
+        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, (short) 3, Status.ACCEPTED));
+        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, (short) 4, Status.ACCEPTED));
+        applications.add(new Application(null, (short) 20, (short) 20, (short) 20,  10F, null, (short) 5,  Status.ACCEPTED));
 
         return applications;
     }
